@@ -1,6 +1,6 @@
 <script>
 import services from "../../services/setting_product_type";
-
+// mflv[]
 export default {
     name: "Product Type",
     data () {
