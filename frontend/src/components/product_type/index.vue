@@ -1,10 +1,5 @@
 <script>
 import services from "../../services/setting_product_type";
-<<<<<<< HEAD
-// mflv[]
-=======
-
->>>>>>> b313518f537e4192972f1235f2c05f181b7def89
 export default {
     name: "Product Type",
     data () {
@@ -48,10 +43,11 @@ export default {
             this.$forceUpdate()
         },
         save () {
-
+            
             services.create(this.value)
             .then((response) => {
                 this.get_all ()
+                this.reset ()
                 console.log(response)
             })
             .catch((error) => {
@@ -89,6 +85,7 @@ export default {
             this.value.product_type_id   = null
             this.value.product_type_name = null
             this.value.product_type_code = null
+            this.get_all ()
         }
 
     },
@@ -162,10 +159,10 @@ export default {
             <tbody class="table-border-bottom-0 ">
                 <tr v-for="(item, index) in data">
                     <td>{{ index + 1 }}</td>
-                    <td><button @click="get_one(item._id)" class="bg-transparent border-0 text-primary">{{ item.product_type_name }}</button></td>
+                    <td><button @click="get_one(item.product_type_id)" class="bg-transparent border-0 text-primary">{{ item.product_type_name }}</button></td>
                     <td>{{ item.product_type_code }}</td>
                     <td>
-                        <button @click="delete_one(item._id)" class="me-1 bg-transparent border-0"><i class="bx bx-trash me-1 font-22 text-primary"></i></button> 
+                        <button @click="delete_one(item.product_type_id)" class="me-1 bg-transparent border-0"><i class="bx bx-trash me-1 font-22 text-primary"></i></button> 
                     </td>
                 </tr>
             </tbody>
