@@ -1,5 +1,5 @@
 import http from "../http_common";
-class Department {
+class ProductType {
   get_all(params) {
     return http.get("/product_type", { params });
   }
@@ -16,4 +16,4 @@ class Department {
     return http.delete(`/product_type/${id}`);
   }
 }
-export default new Department();
+export default new ProductType();

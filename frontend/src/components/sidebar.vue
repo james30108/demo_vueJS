@@ -121,9 +121,11 @@ export default {
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 ประเภทสินค้า
             </router-link>
+            <router-link to="/product_attribute" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-support"></i>
+                คุณสมบัติสินค้า
+            </router-link>
         </li>
-
-
         </ul>
     </aside>
 </template>

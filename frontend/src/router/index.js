@@ -14,6 +14,11 @@ const router = createRouter({
       name: 'product_type',
       component: () => import('../components/product_type/index.vue')
     },
+    {
+      path: '/product_attribute',
+      name: 'product_attribute',
+      component: () => import('../components/product_attribute/index.vue')
+    },
     /*...router_ptoduct*/
   ]
 })
