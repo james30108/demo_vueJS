@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import router_product from "./router_product"
 
 
 const router = createRouter({
@@ -19,7 +20,7 @@ const router = createRouter({
       name: 'product_attribute',
       component: () => import('../components/product_attribute/index.vue')
     },
-    /*...router_ptoduct*/
+    ...router_product
   ]
 })
 

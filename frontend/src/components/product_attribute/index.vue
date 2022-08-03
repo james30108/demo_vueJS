@@ -25,6 +25,23 @@
                 })
                 this.$forceUpdate()
             },
+            get_one (id) {
+
+                services.get_one(id)
+                .then((response) => {
+                    this.data  = response.data.product_attribute
+                    this.value = {
+                        product_attribute_id    : response.data.product_attribute_id,
+                        product_attribute_name  : response.data.product_attribute_name,
+                        product_attribute_detail: response.data.product_attribute_detail
+                    }
+                    console.log(response.data)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+                this.$forceUpdate()
+            },
             save () {
                 
                 services.create(this.value)
@@ -35,6 +52,29 @@
                 })
                 .catch((error) => {
                     console.log(error);
+                })
+                
+            },
+            update () {
+                services.update(this.value.product_attribute_id, this.value)
+                .then((response) => {
+                    this.get_all ()
+                    this.reset ()
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            },
+            delete_one (id) {
+                
+                services.delete(id)
+                .then((response) => {
+                    this.get_all()
+                    console.log(response.data)
+                })
+                .catch((error) => {
+                    console.log(error)
                 })
                 
             },
@@ -129,7 +169,7 @@
             <div class="col-12 col-sm-6">
 
         <div class="card">
-        <h5 class="card-header">คุณสมบัติ</h5>
+        <h5 class="card-header">รายการ</h5>
         
         <div class="table-responsive text-nowrap">
             <table class="table mb-3">

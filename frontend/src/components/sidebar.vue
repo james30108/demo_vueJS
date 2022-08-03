@@ -125,6 +125,10 @@ export default {
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 คุณสมบัติสินค้า
             </router-link>
+            <router-link to="/product" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-support"></i>
+                สินค้า
+            </router-link>
         </li>
         </ul>
     </aside>
