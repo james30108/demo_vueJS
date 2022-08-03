@@ -1,21 +1,40 @@
-module.exports = (mongoose, mongoosePaginate) => {
-
-    // ออกแบบโครงสร้างในการจัดเก็บข้อมูล (Schema)
-    let product_attribute_Schema = mongoose.Schema(
-        {
-            product_attribute_name   : String,
-            product_attribute_child  : Object
+module.exports = (connect, Sequelize) => {
+    
+    //console.log ("create table")
+    const ProductAttribute = connect.define("system_product_attribute",{
+            product_attribute_id     : { 
+                type            : Sequelize.INTEGER(11), 
+                primaryKey      : true, 
+                autoIncrement   : true, 
+                field           : "product_attribute_id" 
+            },
+            product_attribute_name   : { 
+                type            : Sequelize.STRING(50), 
+                allowNull       : false, 
+                defaultValue    : "คุณสมบัติทดสอบ",
+                field           : "product_attribute_name" 
+            },
+            product_attribute_detail   : { 
+                type            : Sequelize.TEXT, 
+                allowNull       : false, 
+                defaultValue    : "S,M,L,XL",
+                field           : "product_attribute_detail" 
+            },
+            product_attribute_create : { 
+                type            : Sequelize.DATE, 
+                allowNull       : false, 
+                defaultValue    : Sequelize.literal("CURRENT_TIMESTAMP"),
+                field           : "product_attribute_create" 
+            }
         },
-        { timestamps: true }
+        {
+            tableName       : "system_product_attribute",
+            timestamps      : false,
+        }
     )
     
-    // Paginate
-    product_attribute_Schema.plugin(mongoosePaginate)
-    
-    // สร้างโมเดล
-    let ProductAttribute = mongoose.model("system_product_attribute", product_attribute_Schema)
-    
-    // ส่งออกโมเดล
-    return ProductAttribute
-    
+    //await ProductAttribute.sync();
+
+    return ProductAttribute;
+
 }

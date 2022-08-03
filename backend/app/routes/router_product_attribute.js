@@ -3,13 +3,13 @@ const router     = require("express").Router()
 
 // Create 
 router.post("/", controller.create)
-// Retrieve all 
-router.get("/", controller.findAll)
-// Retrieve a single with id
-router.get("/:id", controller.findOne)
-// Update a with id
+// get_all 
+router.get("/", controller.get_all)
+// get_onr
+router.get("/:id", controller.get_one)
+// update
 router.put("/:id", controller.update)
-// Delete a with id
+// delete
 router.delete("/:id", controller.delete)
 
 module.exports = router

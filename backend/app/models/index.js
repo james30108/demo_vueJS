@@ -8,6 +8,6 @@ database.sequelize          = Sequelize
 database.mysql              = mysql
 database.connect            = connect
 database.product_type       = require("./model_product_type.js") (connect, Sequelize)
-//database.product_attribute  = require./model_create_table.jsbute.js") (mysql)
+database.product_attribute  = require("./model_product_attribute.js") (connect, Sequelize)
 module.exports              = database
 

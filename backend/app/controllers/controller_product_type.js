@@ -14,8 +14,8 @@ exports.create = async (req, res) => {
   catch (err) {
     // Create Table
     if (err.name == ("SequelizeDatabaseError")) {
-      require("../models").connect.sync()
-      product_type.create(data)
+      await require("../models").connect.sync()
+      await product_type.create(data)
       res.send(data)
     }
   }

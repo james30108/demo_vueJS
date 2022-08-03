@@ -1,100 +1,99 @@
 <script>
-import services from "../../services/setting_product_type";
-export default {
-    name: "Product Type",
-    data () {
-        return {
-            data : [],
-            value: {
-                product_type_id     : null,
-                product_type_name   : null,
-                product_type_code   : null,
-            }
-        }
-    },
-    methods: {
-        get_all () {
-
-            services.get_all()
-            .then((response) => {
-                this.data = response.data
-                console.log(response.data)
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
-            this.$forceUpdate()
-        },
-        get_one (id) {
-
-            services.get_one(id)
-            .then((response) => {
-                this.data  = response.data.product_type
-                this.value = {
-                    product_type_id   : response.data.product_type_id,
-                    product_type_name : response.data.product_type_name,
-                    product_type_code : response.data.product_type_code
+    import services from "../../services/setting_product_type";
+    export default {
+        name: "Product Type",
+        data () {
+            return {
+                data : [],
+                value: {
+                    product_type_id     : null,
+                    product_type_name   : null,
+                    product_type_code   : null,
                 }
-                console.log(response.data)
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
-            this.$forceUpdate()
+            }
         },
-        save () {
-            
-            services.create(this.value)
-            .then((response) => {
+        methods: {
+            get_all () {
+
+                services.get_all()
+                .then((response) => {
+                    this.data = response.data
+                    console.log(response.data)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+                this.$forceUpdate()
+            },
+            get_one (id) {
+
+                services.get_one(id)
+                .then((response) => {
+                    this.data  = response.data.product_type
+                    this.value = {
+                        product_type_id   : response.data.product_type_id,
+                        product_type_name : response.data.product_type_name,
+                        product_type_code : response.data.product_type_code
+                    }
+                    console.log(response.data)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+                this.$forceUpdate()
+            },
+            save () {
+                
+                services.create(this.value)
+                .then((response) => {
+                    this.get_all ()
+                    this.reset ()
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                
+            },
+            update () {
+                services.update(this.value.product_type_id, this.value)
+                .then((response) => {
+                    this.get_all ()
+                    this.reset ()
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            },
+            delete_one (id) {
+                
+                services.delete(id)
+                .then((response) => {
+                    this.get_all()
+                    console.log(response.data)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+                
+            },
+            form_submit () {
+                this.value.product_type_id ? this.update () : this.save ()
+            },
+            reset () {
+                this.value.product_type_id   = null
+                this.value.product_type_name = null
+                this.value.product_type_code = null
                 this.get_all ()
-                this.reset ()
-                console.log(response)
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            
+            }
+
         },
-        update () {
-            services.update(this.value.product_type_id, this.value)
-            .then((response) => {
-                this.get_all ()
-                this.reset ()
-                console.log(response)
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-        },
-        delete_one (id) {
-            
-            services.delete(id)
-            .then((response) => {
-                this.get_all()
-                console.log(response.data)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-            
-        },
-        form_submit () {
-            this.value.product_type_id ? this.update () : this.save ()
-        },
-        reset () {
-            this.value.product_type_id   = null
-            this.value.product_type_name = null
-            this.value.product_type_code = null
+        mounted () {
             this.get_all ()
+            this.$forceUpdate ()
         }
-
-    },
-    mounted () {
-        this.get_all ()
-        this.$forceUpdate ()
     }
-}
-
 </script>
 
 <template>
