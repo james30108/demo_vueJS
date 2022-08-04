@@ -4,7 +4,7 @@ import navbar from './components/header.vue'
 import content from './components/content.vue'
 
 export default {
-  name: "Payroll_fontend",
+  name: "Demo",
   components: {
     sidebar, 
     navbar,
