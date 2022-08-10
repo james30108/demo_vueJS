@@ -4,7 +4,7 @@
         name: "Product Manage",
         data () {
             return {
-                data : [],
+                data : {},
             }
         },
         methods: {
@@ -38,11 +38,10 @@
         },
         mounted () {
             this.get_form ()
-            this.data = this.$route.params
+            this.data = this.$route.params.product_id ? this.$route.params : { product_type : "" }
         }
     }
 </script>
-
 
 <template>
     <title>จัดการสินค้า</title>
@@ -80,6 +79,20 @@
                             placeholder="รหัสสินค้า"
                             v-model.trim="data.product_code"
                             />
+                    </div>
+                    <div class="mb-3 col-12">
+                       <label for="product_type" class="form-label">ประเภทสินค้า</label>
+                        <select 
+                            id="product_type" 
+                            class="form-select" 
+                            v-model.trim="data.product_type"
+                            name="product_type"
+                        >
+                            <option value="">ประเภทสินค้า</option>
+                            <option value="1">กางเกง</option>
+                            <option value="2">เสื้อ</option>
+                            <option value="3">รองเท้า</option>
+                        </select>
                     </div>
                     <div class="col-12">
                         <label class="form-label" for="product_description">รายละเอียดสินค้า</label>
