@@ -1,4 +1,6 @@
 <script>
+
+//หกดหกดหกด
     import services from "../../services/setting_product";
     export default {
         name: "Product",
