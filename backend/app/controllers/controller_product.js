@@ -41,9 +41,10 @@ exports.get_form = async (req, res) => {
     try {
         const type      = await product_type.findAll()
         const attribute = await product_attribute.findAll()
+
         res.send({
             product_type        : type,
-            product_attribute   : JSON.stringify(attribute),
+            product_attribute   : attribute,
         })
     } 
     catch (err) {
