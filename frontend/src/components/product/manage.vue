@@ -315,7 +315,24 @@
                             </thead>
                             <tbody class="table-border-bottom-0">
                                 <tr v-for="(item, index) in data.product_catagory.catagory1.child">
-                                    <td>{{ item.name }}</td>
+                                    <td rowspan="2">{{ item.name }}</td>
+                                    <td >
+                                        2
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td >
+                                        2
+                                    </td>
                                     <td>
                                         <input type="number" class="form-control">
                                     </td>
