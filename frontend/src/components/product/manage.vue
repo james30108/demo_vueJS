@@ -7,14 +7,16 @@
                 data             : {
                     product_type        : "", 
                     product_attribute   : {},
-                    product_catagory1   : { child : [""] }, 
-                    product_catagory2   : { child : [""] }, 
+                    product_catagory    : {
+                        catagory1 : { child : [] },
+                        catagory2 : { child : [] },
+                    }, 
                     product_detail      : {},
                 },
                 product_type     : null,
                 product_attribute: [],
-                sale_type1       : false,
-                sale_type2       : false,
+                catagory1       : false,
+                catagory2       : false,
             }
         },
         methods: {
@@ -56,28 +58,31 @@
             form_submit () {
                 this.value.product_id ? this.update () : this.save ()
             },
-            sale_type_button () {
-                this.sale_type1 = !this.sale_type1
-                if (this.sale_type1 === false) this.data.product_catagory1 = { child : {} }
+            catagory1_button () {
+                this.catagory1 = !this.catagory1
+                if (this.catagory1 === false) this.data.product_catagory.catagory1.child = []
             },
-            sale_type2_button () {
-                this.sale_type2 = !this.sale_type2
+            catagory2_button () {
+                this.catagory2 = !this.catagory2
             },
             cancel () {
                 this.$router.push("product")
             },
-            add_sale_type1 () {
-                this.data.product_catagory1.child.push ("")
+            add_catagory1 () {
+                const id = this.data.product_catagory.catagory1.child[0] ? this.data.product_catagory.catagory1.child.at(-1).id + 1 : 1
+                this.data.product_catagory.catagory1.child.push ({ "id" : id, "name" : "" })
             },
-            delete_sale_type1 (index) {
-                this.data.product_catagory1.child.splice(index, 1)
+            delete_catagory1 (index) {
+                this.data.product_catagory.catagory1.child.splice(index, 1)
             },
-            add_sale_type2 () {
-                this.data.product_catagory2.child.push ("")
+            add_catagory2 () {
+                const id = this.data.product_catagory.catagory2.child[0] ? this.data.product_catagory.catagory2.child.at(-1).id + 1 : 1
+                this.data.product_catagory.catagory2.child.push ({ "id" : id, "name" : "" })
             },
-            delete_sale_type2 (index) {
-                this.data.product_catagory2.child.splice(index, 1)
+            delete_catagory2 (index) {
+                this.data.product_catagory.catagory2.child.splice(index, 1)
             },
+            
         },
         mounted () {
             this.get_form ()
@@ -184,23 +189,24 @@
                 </div>
             </div>
         </div>
-        {{ JSON.stringify(data) }}
-        {{ JSON.stringify(sale_type1_value) }}
+        
+        {{ JSON.stringify(data.product_catagory) }}
+        
         <div class="card mb-3">
             <div class="card-body">
                 <h5>การขาย</h5>
                 <div class="row g-3">
                     <div class="col-12 d-grid">
-                        <button type="button" class="btn btn-primary" @click="sale_type_button" v-if="!sale_type1">เปิดใช้งานตัวเลือกสินค้า</button>
+                        <button type="button" class="btn btn-primary" @click="catagory1_button" v-if="!catagory1">เปิดใช้งานตัวเลือกสินค้า</button>
                     </div>
-                    <div v-if="sale_type1" class="col-12">
+                    <div v-if="catagory1" class="col-12">
                         <div class="card border border-primary position-relative">
                             <div class="position-absolute top-0 end-0 m-3">
                                 <button 
                                     type="button" 
                                     class="btn-close" 
-                                    @click="sale_type_button"
-                                    v-if="!sale_type2"
+                                    @click="catagory1_button"
+                                    v-if="!catagory2"
                                 ></button>
                             </div>
                             <div class="card-header">ตัวเลือกที่ 1</div>
@@ -214,12 +220,12 @@
                                             id="product_catagory1_name"
                                             placeholder="ตัวเลือกสินค้า เช่น ไซส์, ขนาด, ประเภท"
                                             name="product_catagory1_name"
-                                            v-model.trim="data.product_catagory1.name"
+                                            v-model.trim="data.product_catagory.catagory1.name"
                                             required
                                         />
                                     </div>
                                     <div 
-                                        v-for="(item, index) in data.product_catagory1.child"
+                                        v-for="(item, index) in data.product_catagory.catagory1.child"
                                         class="input-group my-3"
                                     >
                                         <input
@@ -228,30 +234,30 @@
                                             id="product_catagory1_child"
                                             placeholder="ข้อมูลของตัวเลือกสินค้า เช่น สีแดง, สีดำ, ไซส์ S, ไซส์ M"
                                             name="product_catagory1_child"
-                                            v-model.trim="data.product_catagory1.child[index]"
+                                            v-model.trim="data.product_catagory.catagory1.child[index].name"
                                             required
                                         />
                                         <button 
                                             class="btn btn-outline-danger" 
                                             type="button" 
-                                            @click="delete_sale_type1 (index)" 
+                                            @click="delete_catagory1 (index)" 
                                             v-if="index != 0"
                                         >
                                             ลบ
                                         </button>
                                     </div>
                                     <div class="col-12 d-grid mt-3">
-                                        <button class="btn btn-primary" @click="add_sale_type1" v-if="data.product_catagory1.child.length < 10">เพิ่มตัวเลือก</button>
+                                        <button class="btn btn-primary" @click="add_catagory1()" v-if="data.product_catagory.catagory1.child.length < 10">เพิ่มตัวเลือก</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 d-grid mt-3">
-                            <button class="btn btn-primary" @click="sale_type2_button" v-if="!sale_type2">ตัวเลือกที่ 2</button>
+                            <button class="btn btn-primary" @click="catagory2_button" v-if="!catagory2">ตัวเลือกที่ 2</button>
                         </div>
-                        <div class="card border border-primary position-relative" v-if="sale_type2">
+                        <div class="card border border-primary position-relative" v-if="catagory2">
                             <div class="position-absolute top-0 end-0 m-3">
-                                <button type="button" class="btn-close" @click="sale_type2_button"></button>
+                                <button type="button" class="btn-close" @click="catagory2_button"></button>
                             </div>
                             <div class="card-header">ตัวเลือกที่ 2</div>
                                 <div class="card-body d-flex">
@@ -264,12 +270,12 @@
                                             id="product_detail_name"
                                             placeholder="ตัวเลือกสินค้า เช่น ไซส์, ขนาด, ประเภท"
                                             name="product_detail_name"
-                                            v-model.trim="data.product_catagory2.name"
+                                            v-model.trim="data.product_catagory.catagory2.name"
                                             required
                                         />
                                     </div>
                                     <div 
-                                        v-for="(item, index) in data.product_catagory2.child"
+                                        v-for="(item, index) in data.product_catagory.catagory2.child"
                                         class="input-group my-3"
                                     >
                                         <input
@@ -278,41 +284,38 @@
                                             id=""
                                             placeholder="ข้อมูลของตัวเลือกสินค้า เช่น สีแดง, สีดำ, ไซส์ S, ไซส์ M"
                                             name=""
-                                            v-model.trim="data.product_catagory2.child[index]"
+                                            v-model.trim="data.product_catagory.catagory2.child[index].name"
                                             required
                                         />
                                         <button 
                                             class="btn btn-outline-danger" 
                                             type="button" 
-                                            @click="delete_sale_type2 (index)" 
+                                            @click="delete_catagory2 (index)" 
                                             v-if="index != 0"
                                         >
                                             ลบ
                                         </button>
                                     </div>
                                     <div class="col-12 d-grid mt-3">
-                                        <button class="btn btn-primary" @click="add_sale_type2" v-if="data.product_catagory2.child.length < 10">เพิ่มตัวเลือก</button>
+                                        <button class="btn btn-primary" @click="add_catagory2" v-if="data.product_catagory.catagory2.child.length < 10">เพิ่มตัวเลือก</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <h5 class="mt-5">รายการตัวเลือกสินค้า</h5>
-                        <table class="table">
+                        <table class="table text-center">
                             <thead>
                                 <tr>
-                                    <th>{{ data.product_catagory1.name }}</th>
-                                    <th v-if="sale_type2">{{ data.product_catagory2.name }}</th>
+                                    <th>{{ data.product_catagory.catagory1.name }}</th>
+                                    <th v-if="catagory2">{{ data.product_catagory.catagory2.name }}</th>
                                     <th width="200">ราคา</th>
                                     <th width="200">จำนวนสินค้า</th>
                                     <th width="250">รหัสสินค้า</th>
                                 </tr>
                             </thead>
-                            <tbody class="table-border-bottom-0 ">
-                                <tr 
-                                    v-for="(item, index) in data.product_catagory1.child"
-                                >
-                                    <td :colspan="data.product_catagory2.child.length">{{ item }}</td>
-                                    <td v-if="sale_type2">ชื่อหัวข้อ 2</td>
+                            <tbody class="table-border-bottom-0">
+                                <tr v-for="(item, index) in data.product_catagory.catagory1.child">
+                                    <td>{{ item.name }}</td>
                                     <td>
                                         <input type="number" class="form-control">
                                     </td>
@@ -326,7 +329,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div v-else="sale_type" class="col-12">
+                    <div v-else="catagory1" class="col-12">
                         <div class="row">
                             <div class="col-6">
                                 <label for="product_price" class="form-label">ราคาสินค้า</label>
