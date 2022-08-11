@@ -44,6 +44,18 @@ module.exports = (connect, Sequelize) => {
                 defaultValue    : 0,
                 field           : "product_status" 
             },
+            product_catagory1   : { 
+                type            : Sequelize.TEXT, 
+                allowNull       : true, 
+                defaultValue    : "",
+                field           : "product_catagory1" 
+            },
+            product_catagory2   : { 
+                type            : Sequelize.TEXT, 
+                allowNull       : true, 
+                defaultValue    : "",
+                field           : "product_catagory2" 
+            },
             product_image_cover : { 
                 type            : Sequelize.STRING(150), 
                 allowNull       : true, 

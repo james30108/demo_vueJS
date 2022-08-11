@@ -14,11 +14,17 @@ module.exports = (connect, Sequelize) => {
                 defaultValue    : 1,
                 field           : "product_detail_main" 
             },
-            product_detail_name : { 
-                type            : Sequelize.STRING(100), 
-                allowNull       : false, 
-                defaultValue    : "สินค้าทดสอบ",
-                field           : "product_detail_name" 
+            product_detail_catagory1 : { 
+                type            : Sequelize.INTEGER(5), 
+                allowNull       : true, 
+                defaultValue    : 0,
+                field           : "product_detail_catagory1" 
+            },
+            product_detail_catagory2 : { 
+                type            : Sequelize.INTEGER(5), 
+                allowNull       : true, 
+                defaultValue    : 0,
+                field           : "product_detail_catagory2" 
             },
             product_detail_price: { 
                 type            : Sequelize.INTEGER(10), 
@@ -32,11 +38,11 @@ module.exports = (connect, Sequelize) => {
                 defaultValue    : 0,
                 field           : "product_detail_quantity" 
             },
-            product_detail_attribute : { 
-                type            : Sequelize.INTEGER(100), 
+            product_detail_code : { 
+                type            : Sequelize.STRING(100), 
                 allowNull       : true, 
-                defaultValue    : 0,
-                field           : "product_detail_attribute" 
+                defaultValue    : "A-0000001",
+                field           : "product_detail_code" 
             },
             product_detail_status : { 
                 type            : Sequelize.INTEGER(1), 
