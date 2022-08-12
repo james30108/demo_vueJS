@@ -95,7 +95,6 @@
                         this.data.product_detail.at(-1).product_catagory2.push ({ "id" : element.id })
                     })
                 } 
-                
             },
             delete_catagory1 (index) {
                 this.data.product_catagory.catagory1.child.splice(index, 1)
@@ -119,7 +118,6 @@
                     element.product_catagory2.splice(index, 1)
                 })
             },
-            
         },
         mounted () {
             this.get_form ()
@@ -226,10 +224,6 @@
                 </div>
             </div>
         </div>
-        
-        {{ JSON.stringify(data.product_detail) }}
-        
-        
         <div class="card mb-3">
             <div class="card-body">
                 <h5>การขาย</h5>
@@ -340,8 +334,10 @@
                                 </div>
                             </div>
                         </div>
+                        {{ JSON.stringify(data.product_detail) }}
+                        {{ JSON.stringify(data.product_catagory.catagory2) }}
                         <h5 class="mt-5">รายการตัวเลือกสินค้า</h5>
-                        <table class="table text-center">
+                        <table class="table table-bordered text-center">
                             <thead>
                                 <tr>
                                     <th>{{ data.product_catagory.catagory1.name }}</th>
@@ -351,20 +347,70 @@
                                     <th width="250">รหัสสินค้า</th>
                                 </tr>
                             </thead>
-                            <tbody class="table-border-bottom-0">
+                            <tbody class="table-border-bottom-0" v-for="(item, index) in data.product_detail" v-if="catagory2">
+                                <tr>
+                                    <td :rowspan="data.product_catagory.catagory2.child.length + 1" >{{ data.product_catagory.catagory1.child.find(element => element.id === item.product_catagory1).name }}</td>
+                                </tr>
+                                <tr v-for="(item2, index2) in data.product_detail[index].product_catagory2">
+                                    <td>{{ data.product_catagory.catagory2.child.find(element => element.id === item2.id).name }}</td>
+                                    <td width="200">
+                                        <input
+                                        type="number"
+                                        class="form-control"
+                                        name="product_price"
+                                        placeholder="ราคาสินค้า"
+                                        v-model.trim="data.product_detail[index].product_catagory2[index2].product_price"
+                                        />
+                                    </td>
+                                    <td width="200">
+                                        <input
+                                        type="number"
+                                        class="form-control"
+                                        name="product_quantity"
+                                        placeholder="จำนวนสินค้า"
+                                        v-model.trim="data.product_detail[index].product_catagory2[index2].product_quantity"
+                                        />
+                                    </td>
+                                    <td width="250">
+                                        <input
+                                        type="text"
+                                        class="form-control"
+                                        name="product_code"
+                                        placeholder="รหัสสินค้า"
+                                        v-model.trim="data.product_detail[index].product_catagory2[index2].product_code"
+                                        />
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody class="table-border-bottom-0" v-else="catagory2">
                                 <tr v-for="(item, index) in data.product_detail">
-                                    <td rowspan="2">{{ item.name }}</td>
-                                    <td >
-                                        2
+                                    <td>{{ data.product_catagory.catagory1.child.find(element => element.id === item.product_catagory1).name }}</td>
+                                    <td width="200">
+                                        <input
+                                        type="number"
+                                        class="form-control"
+                                        name="product_price"
+                                        placeholder="ราคาสินค้า"
+                                        v-model.trim="data.product_detail[index].product_price"
+                                        />
                                     </td>
-                                    <td>
-                                        <input type="number" class="form-control">
+                                    <td width="200">
+                                        <input
+                                        type="number"
+                                        class="form-control"
+                                        name="product_quantity"
+                                        placeholder="จำนวนสินค้า"
+                                        v-model.trim="data.product_detail[index].product_quantity"
+                                        />
                                     </td>
-                                    <td>
-                                        <input type="number" class="form-control">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control">
+                                    <td width="250">
+                                        <input
+                                        type="text"
+                                        class="form-control"
+                                        name="product_code"
+                                        placeholder="รหัสสินค้า"
+                                        v-model.trim="data.product_detail[index].product_code"
+                                        />
                                     </td>
                                 </tr>
                             </tbody>
