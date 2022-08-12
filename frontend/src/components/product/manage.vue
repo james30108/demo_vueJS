@@ -60,10 +60,23 @@
             },
             catagory1_button () {
                 this.catagory1 = !this.catagory1
-                if (this.catagory1 === false) this.data.product_catagory.catagory1.child = []
+                if (this.catagory1 === false) {
+                    this.data.product_catagory.catagory1.child = []
+                    this.data.product_catagory.catagory1.name  = ""
+                    this.data.product_detail = []
+                }
             },
             catagory2_button () {
                 this.catagory2 = !this.catagory2
+                if (this.catagory2 === false) {
+                    this.data.product_catagory.catagory2.child = []
+                    this.data.product_catagory.catagory2.name  = ""
+                    // Delete Catagory2 in product_detail
+                    this.data.product_detail.forEach ((element) => {
+                        element.product_catagory2 = []
+                    })
+                }
+                
             },
             cancel () {
                 this.$router.push("product")
@@ -79,8 +92,7 @@
                 if (this.data.product_catagory.catagory2.child.length > 0) {
                     
                     this.data.product_catagory.catagory2.child.forEach((element) => {
-                        this.data.product_detail[]
-                        console.log ("ID = " + element.id)
+                        this.data.product_detail.at(-1).product_catagory2.push ({ "id" : element.id })
                     })
                 } 
                 
@@ -101,6 +113,11 @@
             },
             delete_catagory2 (index) {
                 this.data.product_catagory.catagory2.child.splice(index, 1)
+
+                // Delete Catagory2 in product_detail
+                this.data.product_detail.forEach ((element) => {
+                    element.product_catagory2.splice(index, 1)
+                })
             },
             
         },
@@ -211,7 +228,7 @@
         </div>
         
         {{ JSON.stringify(data.product_detail) }}
-        {{ JSON.stringify(data.product_catagory.catagory2.child) }}
+        
         
         <div class="card mb-3">
             <div class="card-body">
@@ -335,22 +352,8 @@
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                <tr v-for="(item, index) in data.product_catagory.catagory1.child">
+                                <tr v-for="(item, index) in data.product_detail">
                                     <td rowspan="2">{{ item.name }}</td>
-                                    <td >
-                                        2
-                                    </td>
-                                    <td>
-                                        <input type="number" class="form-control">
-                                    </td>
-                                    <td>
-                                        <input type="number" class="form-control">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control">
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td >
                                         2
                                     </td>
@@ -396,7 +399,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-2">
+                <div class="mt-5">
                     <button type="submit" class="btn btn-primary me-2">บันทึก</button>
                     <button type="reset" class="btn btn-outline-secondary" @click="cancel">ยกเลิก</button>
                 </div>
