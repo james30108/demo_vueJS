@@ -11,7 +11,7 @@
                         catagory1 : { child : [] },
                         catagory2 : { child : [] },
                     }, 
-                    product_detail      : {},
+                    product_detail      : [],
                 },
                 product_type     : null,
                 product_attribute: [],
@@ -71,13 +71,33 @@
             add_catagory1 () {
                 const id = this.data.product_catagory.catagory1.child[0] ? this.data.product_catagory.catagory1.child.at(-1).id + 1 : 1
                 this.data.product_catagory.catagory1.child.push ({ "id" : id, "name" : "" })
+
+                // Insert data to Product_detail
+                this.data.product_detail.push ({ "product_catagory1" : id, "product_catagory2" : [] })
+                
+                // Insert Catagory2 to Product_detail
+                if (this.data.product_catagory.catagory2.child.length > 0) {
+                    
+                    this.data.product_catagory.catagory2.child.forEach((element) => {
+                        this.data.product_detail[]
+                        console.log ("ID = " + element.id)
+                    })
+                } 
+                
             },
             delete_catagory1 (index) {
                 this.data.product_catagory.catagory1.child.splice(index, 1)
+                this.data.product_detail.splice(index, 1)
             },
             add_catagory2 () {
                 const id = this.data.product_catagory.catagory2.child[0] ? this.data.product_catagory.catagory2.child.at(-1).id + 1 : 1
                 this.data.product_catagory.catagory2.child.push ({ "id" : id, "name" : "" })
+
+                // Insert Catagory2 to Product_detail
+                this.data.product_detail.forEach((element) => {
+                    element.product_catagory2.push ({ "id" : id })
+                    
+                })
             },
             delete_catagory2 (index) {
                 this.data.product_catagory.catagory2.child.splice(index, 1)
@@ -190,7 +210,8 @@
             </div>
         </div>
         
-        {{ JSON.stringify(data.product_catagory) }}
+        {{ JSON.stringify(data.product_detail) }}
+        {{ JSON.stringify(data.product_catagory.catagory2.child) }}
         
         <div class="card mb-3">
             <div class="card-body">
@@ -211,7 +232,7 @@
                             </div>
                             <div class="card-header">ตัวเลือกที่ 1</div>
                             <div class="card-body d-flex">
-                                <div class="col-6 mx-auto">
+                                <div class="col-12 col-sm-6 mx-auto">
                                     <div class="my-3">
                                         <label for="product_catagory1_name" class="form-label">ชื่อหมวดหมู่</label>
                                         <input
@@ -261,7 +282,7 @@
                             </div>
                             <div class="card-header">ตัวเลือกที่ 2</div>
                                 <div class="card-body d-flex">
-                                <div class="col-6 mx-auto">
+                                <div class="col-12 col-sm-6 mx-auto">
                                     <div class="my-3">
                                         <label for="product_detail_name" class="form-label">ชื่อหมวดหมู่</label>
                                         <input
