@@ -134,7 +134,6 @@
     <title>จัดการสินค้า</title>
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">จัดการสินค้า</h4>
-        
         <form id="formsubmit" @submit.prevent="form_submit">
         <div class="card mb-3">
             <div class="card-body">
@@ -448,6 +447,38 @@
                 <div class="mt-5">
                     <button type="submit" class="btn btn-primary me-2">บันทึก</button>
                     <button type="reset" class="btn btn-outline-secondary" @click="cancel">ยกเลิก</button>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header"><h5>การขนส่ง</h5></div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label for="product_name" class="form-label">น้ำหนัก</label>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="product_name"
+                            placeholder="ชื่อสินค้า"
+                            name="product_name"
+                            v-model.trim="data.product_name"
+                            autofocus
+                        />
+                    </div>
+                    <h5>ขนาดพัสดุ (กล่อง / ซอง / ถุง)</h5>
+                    <div class="col-12 col-sm-4">
+                        <label class="form-label" for="product_code">ความสูง</label>
+                        <input
+                            type="text"
+                            id="product_code"
+                            class="form-control"
+                            name="product_code"
+                            placeholder="รหัสสินค้า"
+                            v-model.trim="data.product_code"
+                            />
+                    </div>
+
                 </div>
             </div>
         </div>
