@@ -12,6 +12,9 @@
                         catagory2 : { child : [] },
                     }, 
                     product_detail      : [],
+                    product_wait_status : 0,
+                    product_condition   : 0,
+                    product_image_cover : "",
                 },
                 product_type     : null,
                 product_attribute: [],
@@ -136,6 +139,44 @@
         <h4 class="fw-bold py-3 mb-4">จัดการสินค้า</h4>
         <form id="formsubmit" @submit.prevent="form_submit">
         <div class="card mb-3">
+            <div class="card-header"><h5>รูปสินค้า</h5></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-2 position-relative p-3">
+                        <label for="file-input" class="position-relative">
+                            <img 
+                                src="../../assets/img/avatars/1.png" 
+                                class="d-block rounded"
+                                height="100"
+                                width="100"
+                            >
+                            <p class="position-absolute top-50 start-50 translate-middle">Upload</p>
+                        </label>
+                        <p class="m-1">รูปปก</p>
+                        <input 
+                            id="file-input"
+                            type="file" 
+                            name="product_image_cover" 
+                            style="display: none;">
+                    </div>
+                    <div class="col-12 col-sm-2 position-relative p-3" v-for="index in 5" :key="index">
+                        <label for="file-input" class="position-relative">
+                            <img 
+                                src="../../assets/img/avatars/1.png" 
+                                class="d-block rounded"
+                                height="100"
+                                width="100"
+                            >
+                            <p class="position-absolute top-50 start-50 translate-middle">Upload</p>
+                        </label>
+                        <p class="m-1">รูปที่ {{ index }}</p>
+                        <input id="file-input" type="file" name="product_image" style="display: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header"><h5>ข้อมูลสินค้า</h5></div>
             <div class="card-body">
                 <input 
                     type="hidden"
@@ -198,8 +239,8 @@
             </div>
         </div>
         <div class="card mb-3">
+            <div class="card-header"><h5>คุณลักษณะของสินค้า</h5></div>
             <div class="card-body">
-                <h5>คุณลักษณะของสินค้า</h5>
                 <div class="row">
                     <div 
                         v-for="(item, index) in product_attribute"
@@ -224,8 +265,8 @@
             </div>
         </div>
         <div class="card mb-3">
+            <div class="card-header"><h5>การขาย</h5></div>
             <div class="card-body">
-                <h5>การขาย</h5>
                 <div class="row g-3">
                     <div class="col-12 d-grid">
                         <button type="button" class="btn btn-primary" @click="catagory1_button" v-if="!catagory1">เปิดใช้งานตัวเลือกสินค้า</button>
@@ -444,10 +485,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-5">
-                    <button type="submit" class="btn btn-primary me-2">บันทึก</button>
-                    <button type="reset" class="btn btn-outline-secondary" @click="cancel">ยกเลิก</button>
-                </div>
+                
             </div>
         </div>
         <div class="card mb-3">
@@ -455,31 +493,87 @@
             <div class="card-body">
                 <div class="row g-3">
                     <div class="col-12">
-                        <label for="product_name" class="form-label">น้ำหนัก</label>
+                        <label for="product_weight" class="form-label">น้ำหนัก</label>
                         <input
                             class="form-control"
                             type="text"
-                            id="product_name"
-                            placeholder="ชื่อสินค้า"
-                            name="product_name"
-                            v-model.trim="data.product_name"
-                            autofocus
+                            id="product_weight"
+                            placeholder="น้ำหนัก (กิโลกรัม)"
+                            name="product_weight"
+                            v-model.trim="data.product_weight"
                         />
                     </div>
-                    <h5>ขนาดพัสดุ (กล่อง / ซอง / ถุง)</h5>
                     <div class="col-12 col-sm-4">
-                        <label class="form-label" for="product_code">ความสูง</label>
+                        <label class="form-label" for="product_height">ความสูง</label>
                         <input
                             type="text"
-                            id="product_code"
+                            id="product_height"
                             class="form-control"
-                            name="product_code"
-                            placeholder="รหัสสินค้า"
-                            v-model.trim="data.product_code"
+                            name="product_height"
+                            placeholder="ความสูง (เซนติเมตร)"
+                            v-model.trim="data.product_height"
                             />
                     </div>
-
+                    <div class="col-12 col-sm-4">
+                        <label class="form-label" for="product_width_x">ความกว้าง</label>
+                        <input
+                            type="text"
+                            id="product_width_x"
+                            class="form-control"
+                            name="product_width_x"
+                            placeholder="ความกว้าง (เซนติเมตร)"
+                            v-model.trim="data.product_width_x"
+                            />
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label class="form-label" for="product_width_y">ความยาว</label>
+                        <input
+                            type="text"
+                            id="product_width_y"
+                            class="form-control"
+                            name="product_width_y"
+                            placeholder="ความยาว (เซนติเมตร)"
+                            v-model.trim="data.product_width_y"
+                            />
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header"><h5>อื่น ๆ</h5></div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-12 col-sm-6">
+                        <label for="product_wait_status" class="form-label">สินค้าจัดส่งนานกว่าปกติ (3-10 วัน)</label>
+                        <select 
+                            id="product_wait_status" 
+                            class="form-select" 
+                            v-model.trim="data.product_wait_status"
+                            name="product_wait_status"
+                        >
+                            <option value="0">ไม่</option>
+                            <option value="1">ใช่</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <label for="product_condition" class="form-label">สภาพสินค้า</label>
+                        <select 
+                            id="product_condition" 
+                            class="form-select" 
+                            v-model.trim="data.product_condition"
+                            name="product_condition"
+                        >
+                            <option value="0">ของใหม่</option>
+                            <option value="1">ของมือสอง</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <button type="submit" class="btn btn-primary me-2">บันทึก</button>
+                <button type="reset" class="btn btn-outline-secondary" @click="cancel">ยกเลิก</button>
             </div>
         </div>
         </form>
