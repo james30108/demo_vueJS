@@ -14,12 +14,19 @@
                     product_detail      : [],
                     product_wait_status : 0,
                     product_condition   : 0,
-                    product_image_cover : "",
                 },
                 product_type     : null,
                 product_attribute: [],
                 catagory1       : false,
                 catagory2       : false,
+                image_cover     : "../../assets/img/avatars/1.png",
+                image           : [
+                    "../../assets/img/avatars/1.png",
+                    "../../assets/img/avatars/1.png",
+                    "../../assets/img/avatars/1.png",
+                    "../../assets/img/avatars/1.png",
+                    "../../assets/img/avatars/1.png",
+                ]
             }
         },
         methods: {
@@ -47,7 +54,10 @@
             },
             save () {
                 
-                services.create(this.value)
+                const formsubmit = document.getElementById('formsubmit')
+                const data = new FormData(formsubmit)
+
+                services.create(this.data, data)
                 .then((response) => {
                     // this.get_all ()
                     // this.reset ()
@@ -121,6 +131,15 @@
                     element.product_catagory2.splice(index, 1)
                 })
             },
+            upload_cover () {
+                this.image_cover = URL.createObjectURL(this.$refs.image_cover.files[0])
+                console.log (this.$refs.image_cover)
+            },
+            upload_file (index) {
+                console.log (index)
+                this.image[index] = URL.createObjectURL(this.$refs.image[index].files[0])
+                
+            },
         },
         mounted () {
             this.get_form ()
@@ -138,17 +157,20 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">จัดการสินค้า</h4>
         <form id="formsubmit" @submit.prevent="form_submit">
+
+        {{ JSON.stringify(image) }}
+
         <div class="card mb-3">
             <div class="card-header"><h5>รูปสินค้า</h5></div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-12 col-sm-2 position-relative p-3">
+                    <div class="col-6 col-sm-2 position-relative p-3">
                         <label for="file-input" class="position-relative">
                             <img 
-                                src="../../assets/img/avatars/1.png" 
+                                :src="image_cover" 
                                 class="d-block rounded"
-                                height="100"
-                                width="100"
+                                height="120"
+                                width="120"
                             >
                             <p class="position-absolute top-50 start-50 translate-middle">Upload</p>
                         </label>
@@ -156,21 +178,33 @@
                         <input 
                             id="file-input"
                             type="file" 
-                            name="product_image_cover" 
-                            style="display: none;">
+                            ref="image_cover"
+                            accept="image/png, image/jpeg"
+                            name="image_cover" 
+                            style="display: none;"
+                            @change="upload_cover ()"
+                        >
                     </div>
-                    <div class="col-12 col-sm-2 position-relative p-3" v-for="index in 5" :key="index">
-                        <label for="file-input" class="position-relative">
+                    <div class="col-6 col-sm-2 position-relative p-3" v-for="index in 5" :key="index">
+                        <label for="file_{{ index }}" class="position-relative">
                             <img 
-                                src="../../assets/img/avatars/1.png" 
+                                :src="image[index - 1]"
                                 class="d-block rounded"
-                                height="100"
-                                width="100"
+                                height="120"
+                                width="120"
                             >
                             <p class="position-absolute top-50 start-50 translate-middle">Upload</p>
                         </label>
                         <p class="m-1">รูปที่ {{ index }}</p>
-                        <input id="file-input" type="file" name="product_image" style="display: none;">
+                        <input 
+                            id="file_{{ index }}"
+                            type="file" 
+                            ref="image"
+                            accept="image/png, image/jpeg"
+                            name="image" 
+                            style="display: none;"
+                            @change="upload_file ( index - 1 )"
+                        >
                     </div>
                 </div>
             </div>
@@ -374,8 +408,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{ JSON.stringify(data.product_detail) }}
-                        {{ JSON.stringify(data.product_catagory.catagory2) }}
                         <h5 class="mt-5">รายการตัวเลือกสินค้า</h5>
                         <table class="table table-bordered text-center">
                             <thead>
