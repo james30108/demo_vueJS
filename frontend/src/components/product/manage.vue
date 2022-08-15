@@ -55,9 +55,10 @@
             save () {
                 
                 const formsubmit = document.getElementById('formsubmit')
-                const data = new FormData(formsubmit)
+                const form       = new FormData(formsubmit)
+                const main_data  = [this.data, form]
 
-                services.create(this.data, data)
+                services.create(main_data)
                 .then((response) => {
                     // this.get_all ()
                     // this.reset ()
@@ -180,13 +181,13 @@
                             type="file" 
                             ref="image_cover"
                             accept="image/png, image/jpeg"
-                            name="image_cover" 
+                            name="product_image_cover" 
                             style="display: none;"
                             @change="upload_cover ()"
                         >
                     </div>
                     <div class="col-6 col-sm-2 position-relative p-3" v-for="index in 5" :key="index">
-                        <label for="file_{{ index }}" class="position-relative">
+                        <label :for="'file_' + index" class="position-relative">
                             <img 
                                 :src="image[index - 1]"
                                 class="d-block rounded"
@@ -197,11 +198,11 @@
                         </label>
                         <p class="m-1">รูปที่ {{ index }}</p>
                         <input 
-                            id="file_{{ index }}"
+                            :id="'file_' + index"
                             type="file" 
                             ref="image"
                             accept="image/png, image/jpeg"
-                            name="image" 
+                            :name="'product_image_' + index" 
                             style="display: none;"
                             @change="upload_file ( index - 1 )"
                         >

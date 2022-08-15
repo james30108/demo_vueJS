@@ -6,61 +6,85 @@ module.exports = (connect, Sequelize) => {
                 type            : Sequelize.INTEGER(11), 
                 primaryKey      : true, 
                 autoIncrement   : true, 
-                field           : "product_id" 
+                field           : "product_id" ,
+                comment         : "ไอดีสินค้า"
             },
             product_name        : { 
                 type            : Sequelize.STRING(100), 
                 allowNull       : false, 
                 defaultValue    : "สินค้าทดสอบ",
-                field           : "product_name" 
+                field           : "product_name",
+                comment         : "ชื่อสินค้า" 
             },
             product_code        : { 
                 type            : Sequelize.STRING(100), 
                 allowNull       : false, 
                 defaultValue    : "A-0000001",
-                field           : "product_code" 
+                field           : "product_code",
+                comment         : "SKU หลัก" 
             },
             product_type        : { 
                 type            : Sequelize.INTEGER(10), 
                 allowNull       : true, 
                 defaultValue    : 0,
-                field           : "product_type" 
+                field           : "product_type",
+                comment         : "ประเภทสินค้า" 
             },
             product_attribute   : { 
-                type            : Sequelize.INTEGER(100), 
+                type            : Sequelize.TEXT, 
                 allowNull       : true, 
-                defaultValue    : 0,
-                field           : "product_attribute" 
+                defaultValue    : "",
+                field           : "product_attribute",
+                comment         : "คุณลักษณะสินค้า"
             },
             product_description : { 
                 type            : Sequelize.TEXT, 
                 allowNull       : true, 
-                defaultValue    : "สินค้าทดสอบ",
-                field           : "product_description" 
-            },
-            product_status      : { 
-                type            : Sequelize.INTEGER(1), 
-                allowNull       : true, 
-                defaultValue    : 0,
-                field           : "product_status" 
+                defaultValue    : "",
+                field           : "product_description",
+                comment         : "ข้อมูลเพิ่มเติม"
             },
             product_catagory1   : { 
                 type            : Sequelize.TEXT, 
                 allowNull       : true, 
                 defaultValue    : "",
-                field           : "product_catagory1" 
+                field           : "product_catagory1",
+                comment         : "รูปแบบสินค้าที่ 1" 
             },
             product_catagory2   : { 
                 type            : Sequelize.TEXT, 
                 allowNull       : true, 
                 defaultValue    : "",
-                field           : "product_catagory2" 
+                field           : "product_catagory2",
+                comment         : "รูปแบบสินค้าที่ 2" 
+            },
+            product_status      : { 
+                type            : Sequelize.INTEGER(1), 
+                allowNull       : true, 
+                defaultValue    : 0,
+                field           : "product_status",
+                comment         : "สถานะสินค้า" 
+            },
+            product_wait_status : { 
+                type            : Sequelize.INTEGER(1), 
+                allowNull       : true, 
+                defaultValue    : 0,
+                field           : "product_wait_status",
+                comment         : "สินค้าจัดส่งนานพิเศษ"
+            },
+            product_condition   : { 
+                type            : Sequelize.INTEGER(1), 
+                allowNull       : true, 
+                defaultValue    : 0,
+                field           : "product_condition",
+                comment         : "สภาพสินค้า (0=มือหนึ่ง,1=มือสอง)"
             },
             product_image_cover : { 
                 type            : Sequelize.STRING(150), 
                 allowNull       : true, 
                 defaultValue    : "",
-                field           : "product_image_cover" 
+                field           : "product_image_cover",
+                comment         : "รูปปกสินค้า" 
             },
             product_image_1     : { 
                 type            : Sequelize.STRING(150), 
@@ -97,7 +121,13 @@ module.exports = (connect, Sequelize) => {
                 allowNull       : false, 
                 defaultValue    : Sequelize.literal("CURRENT_TIMESTAMP"),
                 field           : "product_create" 
-            }
+            },
+            product_update      : { 
+                type            : Sequelize.DATE, 
+                allowNull       : false, 
+                defaultValue    : Sequelize.literal("CURRENT_TIMESTAMP"),
+                field           : "product_update" 
+            },
         },
         {
             tableName       : "system_product",
