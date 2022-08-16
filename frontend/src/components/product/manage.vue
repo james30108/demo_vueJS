@@ -5,6 +5,7 @@
         data () {
             return {
                 data             : {
+                    product_id          : "", 
                     product_type        : "", 
                     product_attribute   : {},
                     product_catagory    : {
@@ -56,9 +57,10 @@
                 
                 const formsubmit = document.getElementById('formsubmit')
                 const form       = new FormData(formsubmit)
+                form.append("data", JSON.stringify(this.data))
                 const main_data  = [this.data, form]
 
-                services.create(main_data)
+                services.create(form)
                 .then((response) => {
                     // this.get_all ()
                     // this.reset ()
@@ -67,10 +69,11 @@
                 .catch((error) => {
                     console.log(error);
                 })
-            
+                console.log ("Creat")
+
             },
             form_submit () {
-                this.value.product_id ? this.update () : this.save ()
+                this.data.product_id ? this.update () : this.save ()
             },
             catagory1_button () {
                 this.catagory1 = !this.catagory1
@@ -158,8 +161,10 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">จัดการสินค้า</h4>
         <form id="formsubmit" @submit.prevent="form_submit">
-
-        {{ JSON.stringify(image) }}
+        
+        <input type="hidden" name="product_id" v-model.trim="data.product_id" >
+        
+        {{ JSON.stringify(data) }}
 
         <div class="card mb-3">
             <div class="card-header"><h5>รูปสินค้า</h5></div>
@@ -213,11 +218,6 @@
         <div class="card mb-3">
             <div class="card-header"><h5>ข้อมูลสินค้า</h5></div>
             <div class="card-body">
-                <input 
-                    type="hidden"
-                    name="product_id"
-                    v-model.trim="data.product_id"
-                >
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label for="product_name" class="form-label">ชื่อสินค้า</label>
@@ -284,7 +284,7 @@
                         <label for="product_type" class="form-label">{{ item.product_attribute_name }}</label>
                         <select 
                             id="product_attribute" 
-                            class="form-select" 
+                            class="form-select"
                             v-model.trim="data.product_attribute[item.product_attribute_id]"
                         >
                             <option value="">คุณลักษณะของสินค้า</option>

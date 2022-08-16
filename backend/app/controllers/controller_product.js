@@ -3,6 +3,10 @@ const { product, product_type, product_attribute, product_detail } = connect
 
 exports.create = async (req, res) => {
 
+    console.log (req.body)
+    console.log (JSON.parse(req.body.data))
+
+    /*
     const data = {
         product_name : req.body.product_name
     }
@@ -18,7 +22,7 @@ exports.create = async (req, res) => {
         res.send(data)
         }
     }
-
+    */
 }
 
 exports.get_all = async (req, res) => {
