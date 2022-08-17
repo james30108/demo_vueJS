@@ -226,7 +226,6 @@
                             type="text"
                             id="product_name"
                             placeholder="ชื่อสินค้า"
-                            name="product_name"
                             v-model.trim="data.product_name"
                             autofocus
                         />
@@ -237,7 +236,6 @@
                             type="text"
                             id="product_code"
                             class="form-control"
-                            name="product_code"
                             placeholder="รหัสสินค้า"
                             v-model.trim="data.product_code"
                             />
@@ -248,7 +246,6 @@
                             id="product_type" 
                             class="form-select" 
                             v-model.trim="data.product_type"
-                            name="product_type"
                         >
                             <option value="">ประเภทสินค้า</option>
                             <option 
@@ -264,7 +261,6 @@
                         <textarea
                             id="product_description"
                             class="form-control"
-                            name="product_description"
                             placeholder="รายละเอียดสินค้า"
                             v-model.trim="data.product_description"
                         >
@@ -326,7 +322,6 @@
                                             type="text"
                                             id="product_catagory1_name"
                                             placeholder="ตัวเลือกสินค้า เช่น ไซส์, ขนาด, ประเภท"
-                                            name="product_catagory1_name"
                                             v-model.trim="data.product_catagory.catagory1.name"
                                             required
                                         />
@@ -340,7 +335,6 @@
                                             type="text"
                                             id="product_catagory1_child"
                                             placeholder="ข้อมูลของตัวเลือกสินค้า เช่น สีแดง, สีดำ, ไซส์ S, ไซส์ M"
-                                            name="product_catagory1_child"
                                             v-model.trim="data.product_catagory.catagory1.child[index].name"
                                             required
                                         />
@@ -376,7 +370,6 @@
                                             type="text"
                                             id="product_detail_name"
                                             placeholder="ตัวเลือกสินค้า เช่น ไซส์, ขนาด, ประเภท"
-                                            name="product_detail_name"
                                             v-model.trim="data.product_catagory.catagory2.name"
                                             required
                                         />
@@ -390,7 +383,6 @@
                                             type="text"
                                             id=""
                                             placeholder="ข้อมูลของตัวเลือกสินค้า เช่น สีแดง, สีดำ, ไซส์ S, ไซส์ M"
-                                            name=""
                                             v-model.trim="data.product_catagory.catagory2.child[index].name"
                                             required
                                         />
@@ -430,7 +422,6 @@
                                         <input
                                         type="number"
                                         class="form-control"
-                                        name="product_price"
                                         placeholder="ราคาสินค้า"
                                         v-model.trim="data.product_detail[index].product_catagory2[index2].product_price"
                                         />
@@ -439,7 +430,6 @@
                                         <input
                                         type="number"
                                         class="form-control"
-                                        name="product_quantity"
                                         placeholder="จำนวนสินค้า"
                                         v-model.trim="data.product_detail[index].product_catagory2[index2].product_quantity"
                                         />
@@ -448,7 +438,6 @@
                                         <input
                                         type="text"
                                         class="form-control"
-                                        name="product_code"
                                         placeholder="รหัสสินค้า"
                                         v-model.trim="data.product_detail[index].product_catagory2[index2].product_code"
                                         />
@@ -462,7 +451,6 @@
                                         <input
                                         type="number"
                                         class="form-control"
-                                        name="product_price"
                                         placeholder="ราคาสินค้า"
                                         v-model.trim="data.product_detail[index].product_price"
                                         />
@@ -471,7 +459,6 @@
                                         <input
                                         type="number"
                                         class="form-control"
-                                        name="product_quantity"
                                         placeholder="จำนวนสินค้า"
                                         v-model.trim="data.product_detail[index].product_quantity"
                                         />
@@ -480,7 +467,6 @@
                                         <input
                                         type="text"
                                         class="form-control"
-                                        name="product_code"
                                         placeholder="รหัสสินค้า"
                                         v-model.trim="data.product_detail[index].product_code"
                                         />
@@ -498,7 +484,6 @@
                                     type="text"
                                     id="product_price"
                                     placeholder="ราคาสินค้า"
-                                    name="product_price"
                                     v-model.trim="data.product_detail.product_price"
                                     required
                                 />
@@ -510,7 +495,6 @@
                                     type="text"
                                     id="product_quantity"
                                     placeholder="จำนวนสินค้า"
-                                    name="product_quantity"
                                     v-model.trim="data.product_detail.product_quantity"
                                     required
                                 />
@@ -532,7 +516,6 @@
                             type="text"
                             id="product_weight"
                             placeholder="น้ำหนัก (กิโลกรัม)"
-                            name="product_weight"
                             v-model.trim="data.product_weight"
                         />
                     </div>
@@ -542,7 +525,6 @@
                             type="text"
                             id="product_height"
                             class="form-control"
-                            name="product_height"
                             placeholder="ความสูง (เซนติเมตร)"
                             v-model.trim="data.product_height"
                             />
@@ -553,7 +535,6 @@
                             type="text"
                             id="product_width_x"
                             class="form-control"
-                            name="product_width_x"
                             placeholder="ความกว้าง (เซนติเมตร)"
                             v-model.trim="data.product_width_x"
                             />
@@ -564,7 +545,6 @@
                             type="text"
                             id="product_width_y"
                             class="form-control"
-                            name="product_width_y"
                             placeholder="ความยาว (เซนติเมตร)"
                             v-model.trim="data.product_width_y"
                             />
@@ -582,7 +562,6 @@
                             id="product_wait_status" 
                             class="form-select" 
                             v-model.trim="data.product_wait_status"
-                            name="product_wait_status"
                         >
                             <option value="0">ไม่</option>
                             <option value="1">ใช่</option>
@@ -594,7 +573,6 @@
                             id="product_condition" 
                             class="form-select" 
                             v-model.trim="data.product_condition"
-                            name="product_condition"
                         >
                             <option value="0">ของใหม่</option>
                             <option value="1">ของมือสอง</option>
