@@ -484,7 +484,7 @@
                                     type="text"
                                     id="product_price"
                                     placeholder="ราคาสินค้า"
-                                    v-model.trim="data.product_detail.product_price"
+                                    v-model.trim="data.product_price"
                                     required
                                 />
                             </div>
@@ -495,7 +495,7 @@
                                     type="text"
                                     id="product_quantity"
                                     placeholder="จำนวนสินค้า"
-                                    v-model.trim="data.product_detail.product_quantity"
+                                    v-model.trim="data.product_quantity"
                                     required
                                 />
                             </div>
