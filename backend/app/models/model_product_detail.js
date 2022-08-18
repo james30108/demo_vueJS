@@ -16,14 +16,14 @@ module.exports = (connect, Sequelize) => {
                 field           : "product_detail_main",
                 comment         : "ไอดีตารางสินค้าหลัก"
             },
-            product_detail_catagory1 : { 
+            product_detail_sub1 : { 
                 type            : Sequelize.INTEGER(5), 
                 allowNull       : true, 
                 defaultValue    : 0,
                 field           : "product_detail_catagory1",
                 comment         : "ไอดีรูปแบบสินค้าที่ 1"
             },
-            product_detail_catagory2 : { 
+            product_detail_sub2 : { 
                 type            : Sequelize.INTEGER(5), 
                 allowNull       : true, 
                 defaultValue    : 0,
@@ -37,13 +37,6 @@ module.exports = (connect, Sequelize) => {
                 field           : "product_detail_price",
                 comment         : "ราคาสินค้า" 
             },
-            product_detail_cover : { 
-                type            : Sequelize.STRING(150), 
-                allowNull       : true, 
-                defaultValue    : "",
-                field           : "product_detail_cover",
-                comment         : "รูปปกสินค้า" 
-            },
             product_detail_quantity : { 
                 type            : Sequelize.INTEGER(10), 
                 allowNull       : true, 
@@ -54,7 +47,7 @@ module.exports = (connect, Sequelize) => {
             product_detail_code : { 
                 type            : Sequelize.STRING(100), 
                 allowNull       : true, 
-                defaultValue    : "A-0000001",
+                defaultValue    : "",
                 field           : "product_detail_code",
                 comment         : "รหัส SKU"
             },
@@ -71,8 +64,6 @@ module.exports = (connect, Sequelize) => {
             timestamps      : false,
         }
     )
-    
-    //await ProductType.sync();
 
     return ProductDetail;
 

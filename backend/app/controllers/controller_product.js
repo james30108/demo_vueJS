@@ -35,18 +35,20 @@ exports.create = async (req, res) => {
         product_image_4     : product_image_4,
         product_image_5     : product_image_5,
     }
-    
+
     try {
         await product.create (data_product).then (result => {
             
             //for insert product detail
             
             if (data.product_detail.length > 0) {
-                const i = 0
+                
+                var i = 0
                 for (let index of data.product_detail) {
                     
-                    i++
-                    const product_detail_cover = req.files.`product_detail_cover_${i}` ? req.files.product_detail_cover_0[0].filename : ""
+                    const image_name = "product_detail_cover_" + i
+                    const product_detail_cover = req.files[image_name] ? req.files[image_name][0].filename : ""
+                    // console.log (image_name)
 
                     index.product_catagory2.forEach(element => {
                         
@@ -61,7 +63,7 @@ exports.create = async (req, res) => {
                         }
                         product_detail.create (data_product_detail)
                     })
-                    
+                    i++
                 }
             }
             else {
@@ -86,7 +88,7 @@ exports.create = async (req, res) => {
         }
     }
     
-}
+}  
 
 exports.get_all = async (req, res) => {
 

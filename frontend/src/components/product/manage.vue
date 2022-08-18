@@ -15,6 +15,7 @@
                     product_detail      : [],
                     product_wait_status : 0,
                     product_condition   : 0,
+                    product_sub         : []
                 },
                 product_type     : null,
                 product_attribute: [],
@@ -147,7 +148,7 @@
             
             if (this.$route.params.product_id) {
                 console.log ("ส่งมา")
-                //this.data = this.$route.params
+                this.data = this.$route.params
             }
         }
     }
@@ -403,16 +404,26 @@
                             <thead>
                                 <tr>
                                     <th>{{ data.product_catagory.catagory1.name }}</th>
+                                    <th width="250">รูปสินค้า</th>
                                     <th v-if="catagory2">{{ data.product_catagory.catagory2.name }}</th>
                                     <th width="200">ราคา</th>
                                     <th width="200">จำนวนสินค้า</th>
                                     <th width="250">รหัสสินค้า</th>
-                                    <th width="250">รูปสินค้า</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0" v-for="(item, index) in data.product_detail" v-if="catagory2">
                                 <tr>
                                     <td :rowspan="data.product_catagory.catagory2.child.length + 1" >{{ data.product_catagory.catagory1.child.find(element => element.id === item.product_catagory1).name }}</td>
+                                    <td :rowspan="data.product_catagory.catagory2.child.length + 1" width="250">
+                                        <input
+                                        type="file"
+                                        class="form-control"
+                                        placeholder="รูปสินค้า"
+                                        :name="'product_detail_cover_' + index"
+                                        accept="image/png, image/jpeg"
+                                        />
+                                    </td>
                                 </tr>
                                 <tr v-for="(item2, index2) in data.product_detail[index].product_catagory2">
                                     <td>{{ data.product_catagory.catagory2.child.find(element => element.id === item2.id).name }}</td>
@@ -438,24 +449,6 @@
                                         class="form-control"
                                         placeholder="รหัสสินค้า"
                                         v-model.trim="data.product_detail[index].product_catagory2[index2].product_code"
-                                        />
-                                    </td>
-                                    <td width="250">
-                                        <input 
-                                            id="file-input"
-                                            type="file" 
-                                            ref="image_cover"
-                                            accept="image/png, image/jpeg"
-                                            name="product_image_cover" 
-                                            style="display: none;"
-                                            @change="upload_cover ()"
-                                        >
-                                        <input
-                                        type="file"
-                                        class="form-control"
-                                        placeholder="รูปสินค้า"
-                                        :name="'product_detail_cover_' + index"
-                                        accept="image/png, image/jpeg"
                                         />
                                     </td>
                                 </tr>

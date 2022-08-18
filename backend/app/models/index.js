@@ -10,6 +10,7 @@ database.connect            = connect
 database.product            = require("./model_product.js")             (connect, Sequelize)
 database.product_type       = require("./model_product_type.js")        (connect, Sequelize)
 database.product_attribute  = require("./model_product_attribute.js")   (connect, Sequelize)
+database.product_sub        = require("./model_product_sub.js")         (connect, Sequelize)
 database.product_detail     = require("./model_product_detail.js")      (connect, Sequelize)
 module.exports              = database
 
