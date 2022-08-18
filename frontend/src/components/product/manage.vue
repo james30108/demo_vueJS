@@ -62,15 +62,12 @@
 
                 services.create(form)
                 .then((response) => {
-                    // this.get_all ()
-                    // this.reset ()
                     console.log(response)
+                    this.$router.push("product")
                 })
                 .catch((error) => {
                     console.log(error);
                 })
-                console.log ("Creat")
-
             },
             form_submit () {
                 this.data.product_id ? this.update () : this.save ()
@@ -410,6 +407,7 @@
                                     <th width="200">ราคา</th>
                                     <th width="200">จำนวนสินค้า</th>
                                     <th width="250">รหัสสินค้า</th>
+                                    <th width="250">รูปสินค้า</th>
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0" v-for="(item, index) in data.product_detail" v-if="catagory2">
@@ -440,6 +438,24 @@
                                         class="form-control"
                                         placeholder="รหัสสินค้า"
                                         v-model.trim="data.product_detail[index].product_catagory2[index2].product_code"
+                                        />
+                                    </td>
+                                    <td width="250">
+                                        <input 
+                                            id="file-input"
+                                            type="file" 
+                                            ref="image_cover"
+                                            accept="image/png, image/jpeg"
+                                            name="product_image_cover" 
+                                            style="display: none;"
+                                            @change="upload_cover ()"
+                                        >
+                                        <input
+                                        type="file"
+                                        class="form-control"
+                                        placeholder="รูปสินค้า"
+                                        :name="'product_detail_cover_' + index"
+                                        accept="image/png, image/jpeg"
                                         />
                                     </td>
                                 </tr>

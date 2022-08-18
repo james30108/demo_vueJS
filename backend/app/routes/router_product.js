@@ -24,9 +24,18 @@ const upload_iamge = upload_product.fields ([
     { name: "product_image_2", maxCount: 1 },
     { name: "product_image_3", maxCount: 1 },
     { name: "product_image_4", maxCount: 1 },
-    { name: "product_image_5", maxCount: 1 }
+    { name: "product_image_5", maxCount: 1 },
+    { name: "product_detail_cover_0", maxCount: 1 },
+    { name: "product_detail_cover_1", maxCount: 1 },
+    { name: "product_detail_cover_2", maxCount: 1 },
+    { name: "product_detail_cover_3", maxCount: 1 },
+    { name: "product_detail_cover_4", maxCount: 1 },
+    { name: "product_detail_cover_5", maxCount: 1 },
+    { name: "product_detail_cover_6", maxCount: 1 },
+    { name: "product_detail_cover_7", maxCount: 1 },
+    { name: "product_detail_cover_8", maxCount: 1 },
+    { name: "product_detail_cover_9", maxCount: 1 }
 ])
-
 
 // Create 
 router.post("/", upload_iamge , controller.create)

@@ -37,6 +37,13 @@ module.exports = (connect, Sequelize) => {
                 field           : "product_detail_price",
                 comment         : "ราคาสินค้า" 
             },
+            product_detail_cover : { 
+                type            : Sequelize.STRING(150), 
+                allowNull       : true, 
+                defaultValue    : "",
+                field           : "product_detail_cover",
+                comment         : "รูปปกสินค้า" 
+            },
             product_detail_quantity : { 
                 type            : Sequelize.INTEGER(10), 
                 allowNull       : true, 

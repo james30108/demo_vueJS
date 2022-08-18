@@ -58,6 +58,34 @@ module.exports = (connect, Sequelize) => {
                 field           : "product_catagory2",
                 comment         : "รูปแบบสินค้าที่ 2" 
             },
+            product_weight      : { 
+                type            : Sequelize.FLOAT, 
+                allowNull       : true, 
+                defaultValue    : 0,
+                field           : "product_weight",
+                comment         : "น้ำหนักสินค้า (กก.)" 
+            },
+            product_height      : { 
+                type            : Sequelize.INTEGER(5), 
+                allowNull       : true, 
+                defaultValue    : 0,
+                field           : "product_height",
+                comment         : "ส่วนสูงของพัสดุ (ซม.)" 
+            },
+            product_width_x      : { 
+                type            : Sequelize.INTEGER(5), 
+                allowNull       : true, 
+                defaultValue    : 0,
+                field           : "product_width_x",
+                comment         : "ความกว้างของพัสดุ (ซม.)" 
+            },
+            product_width_y      : { 
+                type            : Sequelize.INTEGER(5), 
+                allowNull       : true, 
+                defaultValue    : 0,
+                field           : "product_width_y",
+                comment         : "ความยาวของพัสดุ (ซม.)" 
+            },
             product_status      : { 
                 type            : Sequelize.INTEGER(1), 
                 allowNull       : true, 

@@ -5,26 +5,8 @@ exports.create = async (req, res) => {
 
     //console.log (req.body)
     const data = JSON.parse(req.body.data)
-
     //console.log (data.product_detail[0].product_catagory2)
     
-    // for insert product detail
-    data.product_detail
-    const product_detail = data.product_detail[0].product_catagory2.forEach(element => {
-        
-        const data_product_detail = {
-            product_detail_main         : "",
-            product_detail_catagory1    : "",
-            product_detail_catagory2    : element.id,
-            product_detail_price        : element.product_price,
-            product_detail_quantity     : element.product_quantity,
-            product_detail_code         : element.product_code,
-        }
-        console.log (data_product_detail)
-    })
-    /*
-    
-    */
     const product_image_cover = req.files.product_image_cover ? req.files.product_image_cover[0].filename : ""
     const product_image_1 = req.files.product_image_1 ? req.files.product_image_1[0].filename : ""
     const product_image_2 = req.files.product_image_2 ? req.files.product_image_2[0].filename : ""
@@ -36,10 +18,14 @@ exports.create = async (req, res) => {
         product_name        : data.product_name,
         product_code        : data.product_code,
         product_type        : data.product_type,
-        product_attribute   : data.product_attribute,
+        product_attribute   : JSON.stringify(data.product_attribute),
         product_description : data.product_description,
         product_catagory1   : JSON.stringify(data.product_catagory.catagory1),
         product_catagory2   : JSON.stringify(data.product_catagory.catagory2),
+        product_weight      : data.product_weight,
+        product_height      : data.product_height,
+        product_width_x     : data.product_width_x,
+        product_width_y     : data.product_width_y,
         product_wait_status : data.product_wait_status,
         product_condition   : data.product_condition,
         product_image_cover : product_image_cover,
@@ -49,26 +35,57 @@ exports.create = async (req, res) => {
         product_image_4     : product_image_4,
         product_image_5     : product_image_5,
     }
-    // const data_product_detail = {
-
-    // }
-
-    //console.log (data_save)
     
-    /*
     try {
-        await product.create(data)
-        res.send(data)
+        await product.create (data_product).then (result => {
+            
+            //for insert product detail
+            
+            if (data.product_detail.length > 0) {
+                const i = 0
+                for (let index of data.product_detail) {
+                    
+                    i++
+                    const product_detail_cover = req.files.`product_detail_cover_${i}` ? req.files.product_detail_cover_0[0].filename : ""
+
+                    index.product_catagory2.forEach(element => {
+                        
+                        const data_product_detail = {
+                            product_detail_main         : result.dataValues.product_id,
+                            product_detail_catagory1    : index.product_catagory1,
+                            product_detail_catagory2    : element.id,
+                            product_detail_price        : element.product_price,
+                            product_detail_quantity     : element.product_quantity,
+                            product_detail_code         : element.product_code,
+                            product_detail_cover        : product_detail_cover,
+                        }
+                        product_detail.create (data_product_detail)
+                    })
+                    
+                }
+            }
+            else {
+                const data_product_detail = {
+                    product_detail_main         : result.dataValues.product_id,
+                    product_detail_price        : data.product_price,
+                    product_detail_quantity     : data.product_quantity,
+                    product_detail_code         : data.product_code,
+                }
+                product_detail.create (data_product_detail)
+            }
+            
+        }) 
+        res.send(data_product)
     } 
     catch (err) {
         // Create Table
         if (err.name == ("SequelizeDatabaseError")) {
-        await require("../models").connect.sync()
-        await product.create(data)
-        res.send(data)
+            await require("../models").connect.sync()
+            //await product.create(data)
+            res.send("Create Table Complete")
         }
     }
-    */
+    
 }
 
 exports.get_all = async (req, res) => {
