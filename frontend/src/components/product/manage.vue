@@ -15,12 +15,13 @@
                     product_detail      : [],
                     product_wait_status : 0,
                     product_condition   : 0,
-                    product_sub         : []
+                    product_sub1        : [],
+                    product_sub2        : []
                 },
                 product_type     : null,
                 product_attribute: [],
-                catagory1       : false,
-                catagory2       : false,
+                sub1            : false,
+                sub2            : false,
                 image_cover     : "../../assets/img/avatars/1.png",
                 image           : [
                     "../../assets/img/avatars/1.png",
@@ -73,17 +74,17 @@
             form_submit () {
                 this.data.product_id ? this.update () : this.save ()
             },
-            catagory1_button () {
-                this.catagory1 = !this.catagory1
-                if (this.catagory1 === false) {
-                    this.data.product_catagory.catagory1.child = []
+            sub1_button () {
+                this.sub1 = !this.sub1
+                if (this.sub1 === false) {
+                    this.data.product_sub1 = []
                     this.data.product_catagory.catagory1.name  = ""
                     this.data.product_detail = []
                 }
             },
-            catagory2_button () {
-                this.catagory2 = !this.catagory2
-                if (this.catagory2 === false) {
+            sub2_button () {
+                this.sub2 = !this.sub2
+                if (this.sub2 === false) {
                     this.data.product_catagory.catagory2.child = []
                     this.data.product_catagory.catagory2.name  = ""
                     // Delete Catagory2 in product_detail
@@ -162,7 +163,7 @@
         
         <input type="hidden" name="product_id" v-model.trim="data.product_id" >
         
-        {{ JSON.stringify(data) }}
+        {{ JSON.stringify(data.product_sub1) }}
 
         <div class="card mb-3">
             <div class="card-header"><h5>รูปสินค้า</h5></div>
@@ -314,13 +315,13 @@
                             <div class="card-body d-flex">
                                 <div class="col-12 col-sm-6 mx-auto">
                                     <div class="my-3">
-                                        <label for="product_catagory1_name" class="form-label">ชื่อหมวดหมู่</label>
+                                        <label for="product_sub1_name" class="form-label">ชื่อหมวดหมู่</label>
                                         <input
                                             class="form-control"
                                             type="text"
-                                            id="product_catagory1_name"
+                                            id="product_sub1_name"
                                             placeholder="ตัวเลือกสินค้า เช่น ไซส์, ขนาด, ประเภท"
-                                            v-model.trim="data.product_catagory.catagory1.name"
+                                            v-model.trim="data.product_sub1.name"
                                             required
                                         />
                                     </div>
