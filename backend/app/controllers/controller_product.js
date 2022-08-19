@@ -1,5 +1,5 @@
 const connect      = require("../models")
-const { product, product_type, product_attribute, product_detail } = connect
+const { product, product_type, product_attribute, product_detail, product_sub1, product_sub2 } = connect
 
 exports.create = async (req, res) => {
 
@@ -20,8 +20,8 @@ exports.create = async (req, res) => {
         product_type        : data.product_type,
         product_attribute   : JSON.stringify(data.product_attribute),
         product_description : data.product_description,
-        product_catagory1   : JSON.stringify(data.product_catagory.catagory1),
-        product_catagory2   : JSON.stringify(data.product_catagory.catagory2),
+        product_sub1        : data.product_sub1.name,
+        product_sub2        : data.product_sub2.name,
         product_weight      : data.product_weight,
         product_height      : data.product_height,
         product_width_x     : data.product_width_x,
@@ -35,12 +35,23 @@ exports.create = async (req, res) => {
         product_image_4     : product_image_4,
         product_image_5     : product_image_5,
     }
-
+    console.log (data_product)
+    
     try {
+
         await product.create (data_product).then (result => {
             
+            // insert sub1
+            data.product_sub1.child.forEach(element => {
+
+                const data_sub1 = {
+
+                }
+
+                product.create (data_product)
+            })
+
             //for insert product detail
-            
             if (data.product_detail.length > 0) {
                 
                 var i = 0
@@ -78,6 +89,7 @@ exports.create = async (req, res) => {
             
         }) 
         res.send(data_product)
+        
     } 
     catch (err) {
         // Create Table
@@ -87,7 +99,6 @@ exports.create = async (req, res) => {
             res.send("Create Table Complete")
         }
     }
-    
 }  
 
 exports.get_all = async (req, res) => {

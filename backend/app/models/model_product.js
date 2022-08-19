@@ -44,18 +44,18 @@ module.exports = (connect, Sequelize) => {
                 field           : "product_description",
                 comment         : "ข้อมูลเพิ่มเติม"
             },
-            product_catagory1   : { 
-                type            : Sequelize.TEXT, 
+            product_sub1        : { 
+                type            : Sequelize.STRING(100), 
                 allowNull       : true, 
                 defaultValue    : "",
-                field           : "product_catagory1",
+                field           : "product_sub1",
                 comment         : "รูปแบบสินค้าที่ 1" 
             },
-            product_catagory2   : { 
-                type            : Sequelize.TEXT, 
+            product_sub2        : { 
+                type            : Sequelize.STRING(100), 
                 allowNull       : true, 
                 defaultValue    : "",
-                field           : "product_catagory2",
+                field           : "product_sub2",
                 comment         : "รูปแบบสินค้าที่ 2" 
             },
             product_weight      : { 
