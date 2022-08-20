@@ -42,35 +42,46 @@ exports.create = async (req, res) => {
         await product.create (data_product).then (result => {
             
             // insert sub1
-            data.product_sub1.child.forEach(element => {
+            if (data.product_sub1.child.length > 0) {
+                var i = 0
+                data.product_sub1.child.forEach(element => {
+                    const image_name            = "product_sub1_image_" + i
+                    const product_sub1_image    = req.files[image_name] ? req.files[image_name][0].filename : ""
+                    const data_sub1             = {
+                        product_sub1_key    : result.dataValues.product_id,
+                        product_sub1_main   : element.id,
+                        product_sub1_name   : element.name,
+                        product_sub1_image  : product_sub1_image,
+                    }
+                    product_sub1.create (data_sub1)
+                    i++
+                })
+            }
 
-                const data_sub1 = {
-
-                }
-
-                product.create (data_product)
-            })
+            // insert sub2
+            if (data.product_sub2.child.length > 0) {
+                data.product_sub2.child.forEach(element => {
+                    const data_sub2             = {
+                        product_sub2_key    : result.dataValues.product_id,
+                        product_sub2_main   : element.id,
+                        product_sub2_name   : element.name
+                    }
+                    product_sub2.create (data_sub2)
+                })
+            }
 
             //for insert product detail
             if (data.product_detail.length > 0) {
-                
                 var i = 0
                 for (let index of data.product_detail) {
-                    
-                    const image_name = "product_detail_cover_" + i
-                    const product_detail_cover = req.files[image_name] ? req.files[image_name][0].filename : ""
-                    // console.log (image_name)
-
-                    index.product_catagory2.forEach(element => {
-                        
+                    index.child.forEach(element => {
                         const data_product_detail = {
                             product_detail_main         : result.dataValues.product_id,
-                            product_detail_catagory1    : index.product_catagory1,
-                            product_detail_catagory2    : element.id,
-                            product_detail_price        : element.product_price,
-                            product_detail_quantity     : element.product_quantity,
-                            product_detail_code         : element.product_code,
-                            product_detail_cover        : product_detail_cover,
+                            product_detail_sub1         : index.product_detail_sub1,
+                            product_detail_sub2         : element.product_detail_sub2,
+                            product_detail_price        : element.product_detail_price,
+                            product_detail_quantity     : element.product_detail_quantity,
+                            product_detail_code         : element.product_detail_code,
                         }
                         product_detail.create (data_product_detail)
                     })
@@ -80,9 +91,8 @@ exports.create = async (req, res) => {
             else {
                 const data_product_detail = {
                     product_detail_main         : result.dataValues.product_id,
-                    product_detail_price        : data.product_price,
-                    product_detail_quantity     : data.product_quantity,
-                    product_detail_code         : data.product_code,
+                    product_detail_price        : data.product_detail_price,
+                    product_detail_quantity     : data.product_detail_quantity,
                 }
                 product_detail.create (data_product_detail)
             }
