@@ -83,12 +83,18 @@
             <tbody class="table-border-bottom-0 ">
                 <tr v-for="(item, index) in data">
                     <td>{{ index + 1 }}</td>
-                    <td></td>
+                    <td><img 
+                            :src="item.product_image_cover" 
+                            class="d-block rounded"
+                            height="50"
+                            width="50"
+                        >
+                    </td>
                     <td><button @click="get_one(item.product_id)" class="bg-transparent border-0 text-primary">{{ item.product_name }}</button></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ item.product_code }}</td>
+                    <td>{{ item.product_code }}</td>
+                    <td>{{ item.product_code }}</td>
+                    <td>{{ item.product_code }}</td>
                     <td>
                         <button @click="delete_one(item.product_id)" class="me-1 bg-transparent border-0"><i class="bx bx-trash me-1 font-22 text-primary"></i></button> 
                     </td>

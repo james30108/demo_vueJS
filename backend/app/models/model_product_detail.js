@@ -20,14 +20,14 @@ module.exports = (connect, Sequelize) => {
                 type            : Sequelize.INTEGER(5), 
                 allowNull       : true, 
                 defaultValue    : 0,
-                field           : "product_detail_catagory1",
+                field           : "product_detail_sub1",
                 comment         : "ไอดีรูปแบบสินค้าที่ 1"
             },
             product_detail_sub2 : { 
                 type            : Sequelize.INTEGER(5), 
                 allowNull       : true, 
                 defaultValue    : 0,
-                field           : "product_detail_catagory2",
+                field           : "product_detail_sub2",
                 comment         : "ไอดีรูปแบบสินค้าที่ 2"
             },
             product_detail_price: { 

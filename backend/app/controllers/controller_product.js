@@ -149,13 +149,80 @@ exports.get_form = async (req, res) => {
 
 exports.get_one = async (req, res) => {
 
-    id       =  req.params.id
-    get_one  =  await product.findOne({
+    result      = {}
+    id          =  req.params.id
+    data_main   =  await product.findOne({
         where : { product_id : id }
     })
-    .then ((doc) => {
-        res.send(doc)
+    data_detail = await product_detail.findAll({
+        where : { product_detail_main : id }
     })
+    data_sub1 = await product_sub1.findAll({
+        where : { product_sub1_key : id }
+    })
+    data_sub2 = await product_sub2.findAll({
+        where : { product_sub2_key : id }
+    })
+    result      = data_main.dataValues  
+
+    var array_detail = []
+    if (data_main.dataValues.product_sub1 != "") {
+
+        jason_sub1 = { name : data_main.dataValues.product_sub1, child : [] }
+        data_sub1.forEach ((element) => jason_sub1.child.push(JSON.stringify(
+            { 
+                id   : element.dataValues.product_sub1_main, 
+                name : element.dataValues.product_sub1_name 
+            }
+        )))
+        result.product_sub1 = JSON.stringify (jason_sub1)
+        
+        for (let x in data_sub1) {
+
+            // เพิ่ม sub1 ลงใน detail
+            array_detail.push({
+                name : data_sub1[x].dataValues.product_sub1_main,
+                child : [],
+            })
+
+            // ค้นหา detail จากรหัสสินค้า และรหัส sub1
+            data_detail_sub1 = await product_detail.findAll({
+                where : { product_detail_main : id, product_detail_sub1 : data_sub1[x].dataValues.product_sub1_main}
+            })
+
+            for (y in data_detail_sub1) {
+
+                //console.log (data_detail_sub1[y].dataValues.product_detail_sub1)
+                
+                array_detail.find(find_id => find_id.name === data_detail_sub1[y].dataValues.product_detail_sub1).child.push(JSON.stringify ({
+                    product_detail_price    : data_detail_sub1[y].dataValues.product_detail_price,
+                    product_detail_quantity : data_detail_sub1[y].dataValues.product_detail_quantity,
+                    product_detail_sub2     : data_detail_sub1[y].dataValues.product_detail_sub2,
+                    product_detail_code     : data_detail_sub1[y].dataValues.product_detail_code,
+                }))
+                
+            }
+
+            
+        }
+
+        result.product_detail = JSON.stringify (array_detail)
+        
+    }
+    else {
+        data_detail.forEach ((element) => (
+            result.product_detail_price     =  element.dataValues.product_detail_price,
+            result.product_detail_quantity  =  element.dataValues.product_detail_quantity
+        ))
+    }
+
+    if (data_main.dataValues.product_sub2 != "") {
+        jason_sub2 = { name : data_main.dataValues.product_sub2, child : [] }
+        data_sub2.forEach ((element) => jason_sub2.child.push(JSON.stringify({ id : element.dataValues.product_sub2_main, name : element.dataValues.product_sub2_name })))
+        result.product_sub2 = JSON.stringify (jason_sub2)
+    }
+    console.log (result)
+    res.send(result)
 }
 
 exports.update = async (req, res) => {
