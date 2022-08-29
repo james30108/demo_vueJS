@@ -154,27 +154,25 @@
             },
         },
         mounted () {
-            this.get_form ()
+            
             if (this.$route.params.product_id) {
 
                 this.data = this.$route.params
-                
-                //const product_detail = JSON.parse (this.$route.params.product_detail)
-                
+       
                 if (this.$route.params.product_sub1 != "") {
                     this.sub1                   = true
                     this.data.product_sub1      = JSON.parse (this.$route.params.product_sub1)
                     this.data.product_detail    = JSON.parse (this.$route.params.product_detail)
                     this.$route.params.product_sub1.child.forEach ((element, index) => this.data.product_sub1.child[index] = JSON.parse (element))
-
+                    
                     for (let x in this.$route.params.product_detail) {
                         for (let y in this.$route.params.product_detail[x].child) {
                             //onsole.log (this.$route.params.product_detail[x].child[y])
                             this.data.product_detail[x].child[y] = JSON.parse (this.$route.params.product_detail[x].child[y])
                         }
                     }
-                    //this.$route.params.product_detail[0].child.forEach ((element, index) => this.data.product_detail[0].child[index] = JSON.parse (element))
                     
+                    //this.$route.params.product_detail[0].child.forEach ((element, index) => this.data.product_detail[0].child[index] = JSON.parse (element))
                 }
                 if (this.$route.params.product_sub2 != "") {
                     this.sub2 = true
@@ -183,7 +181,11 @@
                 }
                 console.log (this.data)
             }
-            //console.log (this.data)
+            else {
+                this.get_form ()
+                //console.log (this.data)
+            }
+            
         }
     }
 </script>
@@ -324,6 +326,11 @@
             </div>
         </div>
         <div class="card mb-3">
+            <!--
+               {{ JSON.stringify(data.product_sub1) }} <br>
+            {{ JSON.stringify(data.product_sub2) }} <br>
+            {{ JSON.stringify(data) }} <br>     
+            -->
             {{ JSON.stringify(data.product_sub1) }} <br>
             {{ JSON.stringify(data.product_sub2) }} <br>
             {{ JSON.stringify(data) }} <br>

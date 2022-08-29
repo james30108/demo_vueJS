@@ -181,7 +181,7 @@ exports.get_one = async (req, res) => {
 
             // เพิ่ม sub1 ลงใน detail
             array_detail.push({
-                name : data_sub1[x].dataValues.product_sub1_main,
+                product_detail_sub1 : data_sub1[x].dataValues.product_sub1_main,
                 child : [],
             })
 
@@ -194,7 +194,7 @@ exports.get_one = async (req, res) => {
 
                 //console.log (data_detail_sub1[y].dataValues.product_detail_sub1)
                 
-                array_detail.find(find_id => find_id.name === data_detail_sub1[y].dataValues.product_detail_sub1).child.push(JSON.stringify ({
+                array_detail.find(find_id => find_id.product_detail_sub1 === data_detail_sub1[y].dataValues.product_detail_sub1).child.push(JSON.stringify ({
                     product_detail_price    : data_detail_sub1[y].dataValues.product_detail_price,
                     product_detail_quantity : data_detail_sub1[y].dataValues.product_detail_quantity,
                     product_detail_sub2     : data_detail_sub1[y].dataValues.product_detail_sub2,
