@@ -35,6 +35,18 @@
                 })
                 this.$forceUpdate()
             },
+            delete_one (id) {
+                
+                services.delete(id)
+                .then((response) => {
+                    this.get_all()
+                    console.log(response.data)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+                
+            },
         },
         mounted () {
             this.get_all ()
@@ -84,10 +96,18 @@
                 <tr v-for="(item, index) in data">
                     <td>{{ index + 1 }}</td>
                     <td><img 
+                            v-if="item.product_image_cover != '' "
                             :src="item.product_image_cover" 
                             class="d-block rounded"
-                            height="50"
-                            width="50"
+                            height="100"
+                            width="100"
+                        >
+                        <img 
+                            v-else="item.product_image_cover != '' "
+                            src="../../assets/img/avatars/1.png" 
+                            class="d-block rounded"
+                            height="100"
+                            width="100"
                         >
                     </td>
                     <td><button @click="get_one(item.product_id)" class="bg-transparent border-0 text-primary">{{ item.product_name }}</button></td>

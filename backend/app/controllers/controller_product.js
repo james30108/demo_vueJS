@@ -1,4 +1,5 @@
-const connect      = require("../models")
+const fs      = require("fs");
+const connect = require("../models")
 const { product, product_type, product_attribute, product_detail, product_sub1, product_sub2 } = connect
 
 exports.create = async (req, res) => {
@@ -114,7 +115,23 @@ exports.create = async (req, res) => {
 exports.get_all = async (req, res) => {
 
     try {
-        const document = await product.findAll()
+
+        const proxyHost = req.headers["x-forwarded-host"]
+        const host      = proxyHost ? proxyHost : req.headers.host
+
+        const data_product  = await product.findAll()
+        const document      = []
+
+        for (x in data_product) {
+            //console.log (data_product[x].dataValues)
+            var image = data_product[x].dataValues.product_image_cover != "" ? "http://" + host + "/assets/img/products/" + data_product[x].dataValues.product_image_cover : ""
+            document.push ({
+                product_id          : data_product[x].dataValues.product_id,
+                product_name        : data_product[x].dataValues.product_name,
+                product_code        : data_product[x].dataValues.product_code,
+                product_image_cover : image,
+            })
+        }
         res.send(document)
     } 
     catch (err) {
@@ -148,7 +165,7 @@ exports.get_form = async (req, res) => {
 }
 
 exports.get_one = async (req, res) => {
-
+    
     result      = {}
     id          =  req.params.id
     data_main   =  await product.findOne({
@@ -248,12 +265,39 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   
-//   id =  req.params.id;
-//   await product_type.destroy({
-//     where: { product_type_id : id }
-//   })
-//   .then ((doc) => {
-//     res.sendStatus(200)
-//   })
+    id =  req.params.id;
+
+    data_main   =  await product.findOne({
+        where : { product_id : id }
+    })
+    data_sub1 = await product_sub1.findAll({
+        where : { product_sub1_key : id }
+    })
+
+    if (data_main.dataValues.product_image_cover != "") fs.unlinkSync("./app/public/assets/img/products/" + data_main.dataValues.product_image_cover)
+    if (data_main.dataValues.product_image_1 != "") fs.unlinkSync("./app/public/assets/img/products/" + data_main.dataValues.product_image_1)
+    if (data_main.dataValues.product_image_2 != "") fs.unlinkSync("./app/public/assets/img/products/" + data_main.dataValues.product_image_2)
+    if (data_main.dataValues.product_image_3 != "") fs.unlinkSync("./app/public/assets/img/products/" + data_main.dataValues.product_image_3)
+    if (data_main.dataValues.product_image_4 != "") fs.unlinkSync("./app/public/assets/img/products/" + data_main.dataValues.product_image_4)
+    if (data_main.dataValues.product_image_5 != "") fs.unlinkSync("./app/public/assets/img/products/" + data_main.dataValues.product_image_5)
+    
+    for (let x in data_sub1) {
+        if (data_sub1[x].dataValues.product_sub1_image != "") fs.unlinkSync("./app/public/assets/img/products/" + data_sub1[x].dataValues.product_sub1_image)
+    }
+
+    await product.destroy({
+        where: { product_id : id }
+    })
+    await product_detail.destroy({
+        where: { product_detail_main : id }
+    })
+    await product_sub1.destroy({
+        where: { product_sub1_key : id }
+    })
+    await product_sub2.destroy({
+        where: { product_sub2_key : id }
+    })
+
+    res.sendStatus(200)
   
 }
