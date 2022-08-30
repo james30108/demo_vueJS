@@ -82,6 +82,23 @@
                     this.data.product_detail.push ({ product_detail_sub1 : 1, child : [{}] })
                 }
             },
+            add_sub1 () {
+                const id = this.data.product_sub1.child[0] ? this.data.product_sub1.child.at(-1).id + 1 : 1
+                this.data.product_sub1.child.push ({ id : id, name : "" })
+                
+                // Insert data to Product_detail
+                this.data.product_detail.push ({ product_detail_sub1 : id, child : [{}] })
+    
+                // Insert Catagory2 to Product_detail
+                if (this.data.product_sub2.child.length > 0) {
+                    
+                    this.data.product_sub2.child.forEach((element) => {
+                        
+                        this.data.product_detail.at(-1).child.push ({ product_detail_sub2 : element.id })
+                    })
+                } 
+                
+            },
             sub2_button () {
                 this.sub2 = !this.sub2
                 if (this.sub2 === false) {
@@ -103,23 +120,6 @@
             },
             cancel () {
                 this.$router.push("product")
-            },
-            add_sub1 () {
-                const id = this.data.product_sub1.child[0] ? this.data.product_sub1.child.at(-1).id + 1 : 1
-                this.data.product_sub1.child.push ({ id : id, name : "" })
-                
-                // Insert data to Product_detail
-                this.data.product_detail.push ({ product_detail_sub1 : id, child : [] })
-    
-                // Insert Catagory2 to Product_detail
-                if (this.data.product_sub2.child.length > 0) {
-                    
-                    this.data.product_sub2.child.forEach((element) => {
-                        
-                        this.data.product_detail.at(-1).child.push ({ product_detail_sub2 : element.id })
-                    })
-                } 
-                
             },
             delete_sub1 (index) {
                 this.data.product_sub1.child.splice(index, 1)
@@ -154,11 +154,29 @@
             },
         },
         mounted () {
-            
+
             if (this.$route.params.product_id) {
 
                 this.data = this.$route.params
-       
+                
+                // จัดการข้อมูลแบบฟอร์ม
+                this.product_type        = JSON.parse (this.$route.params.form_product_type)
+
+                // จัดการรูปภาพ
+                if (this.$route.params.product_image_cover != "") this.image_cover = this.$route.params.product_image_cover
+                
+                const product_attribute  = JSON.parse (this.$route.params.form_product_attribute)
+                product_attribute.forEach(element => {
+
+                    this.product_attribute.push({
+                        product_attribute_id     : element.product_attribute_id,
+                        product_attribute_name   : element.product_attribute_name,
+                        product_attribute_detail : JSON.parse (element.product_attribute_detail)
+                    })
+                })
+                this.data.product_attribute = JSON.parse (this.$route.params.product_attribute)
+
+                // จัดการข้อมูลรายละเอียดสินค้า
                 if (this.$route.params.product_sub1 != "") {
                     this.sub1                   = true
                     this.data.product_sub1      = JSON.parse (this.$route.params.product_sub1)
@@ -183,7 +201,6 @@
             }
             else {
                 this.get_form ()
-                //console.log (this.data)
             }
             
         }
@@ -192,10 +209,11 @@
 
 <template>
     <title>จัดการสินค้า</title>
+    {{ JSON.stringify(image_cover) }}
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">จัดการสินค้า</h4>
         <form id="formsubmit" @submit.prevent="form_submit">
-        <input type="hidden" name="product_id" v-model.trim="data.product_id" >
+        <input type="hidden" name="product_id" v-model.trim="data.product_id">
         <div class="card mb-3">
             <div class="card-header"><h5>รูปสินค้า</h5></div>
             <div class="card-body">
@@ -327,13 +345,9 @@
         </div>
         <div class="card mb-3">
             <!--
-               {{ JSON.stringify(data.product_sub1) }} <br>
             {{ JSON.stringify(data.product_sub2) }} <br>
             {{ JSON.stringify(data) }} <br>     
             -->
-            {{ JSON.stringify(data.product_sub1) }} <br>
-            {{ JSON.stringify(data.product_sub2) }} <br>
-            {{ JSON.stringify(data) }} <br>
             <div class="card-header"><h5>การขาย</h5></div>
             <div class="card-body">
                 <div class="row g-3">
@@ -385,13 +399,20 @@
                                         </button>
                                     </div>
                                     <div class="col-12 d-grid mt-3">
-                                        <button class="btn btn-primary" @click="add_sub1()" v-if="data.product_sub1.child.length < 10">เพิ่มตัวเลือก</button>
+                                        <button
+                                            type="button"
+                                            class="btn btn-primary" 
+                                            @click="add_sub1 ()" 
+                                            v-if="data.product_sub1.child.length < 10"
+                                        >
+                                            เพิ่มตัวเลือก
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 d-grid mt-3">
-                            <button class="btn btn-primary" @click="sub2_button" v-if="!sub2">ตัวเลือกที่ 2</button>
+                            <button type="button" class="btn btn-primary" @click="sub2_button" v-if="!sub2">ตัวเลือกที่ 2</button>
                         </div>
                         <div class="card border border-primary position-relative" v-if="sub2">
                             <div class="position-absolute top-0 end-0 m-3">
@@ -432,7 +453,14 @@
                                         </button>
                                     </div>
                                     <div class="col-12 d-grid mt-3">
-                                        <button class="btn btn-primary" @click="add_sub2" v-if="data.product_sub2.child.length < 10">เพิ่มตัวเลือก</button>
+                                        <button 
+                                            type="button" 
+                                            class="btn btn-primary" 
+                                            @click="add_sub2" 
+                                            v-if="data.product_sub2.child.length < 10"
+                                        >
+                                            เพิ่มตัวเลือก
+                                        </button>
                                     </div>
                                 </div>
                             </div>

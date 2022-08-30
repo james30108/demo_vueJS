@@ -166,6 +166,12 @@ exports.get_form = async (req, res) => {
 
 exports.get_one = async (req, res) => {
     
+    const proxyHost = req.headers["x-forwarded-host"]
+    const host      = proxyHost ? proxyHost : req.headers.host
+
+    type      = await product_type.findAll()
+    attribute = await product_attribute.findAll()
+
     result      = {}
     id          =  req.params.id
     data_main   =  await product.findOne({
@@ -182,9 +188,23 @@ exports.get_one = async (req, res) => {
     })
     result      = data_main.dataValues  
 
+    // ข้อมูลตัวเลือกสินค้า
+    result.form_product_type      = JSON.stringify (type)
+    result.form_product_attribute = JSON.stringify (attribute)
+
+    // ข้อมูลรูปภาพสินค้า
+    result.product_image_cover = data_main.dataValues.product_image_cover  != "" ? "http://" + host + "/assets/img/products/" + data_main.dataValues.product_image_cover : ""
+    result.product_image_1     = data_main.dataValues.product_image_1      != "" ? "http://" + host + "/assets/img/products/" + data_main.dataValues.product_image_1     : ""
+    result.product_image_2     = data_main.dataValues.product_image_2      != "" ? "http://" + host + "/assets/img/products/" + data_main.dataValues.product_image_2     : ""
+    result.product_image_3     = data_main.dataValues.product_image_3      != "" ? "http://" + host + "/assets/img/products/" + data_main.dataValues.product_image_3     : ""
+    result.product_image_4     = data_main.dataValues.product_image_4      != "" ? "http://" + host + "/assets/img/products/" + data_main.dataValues.product_image_4     : ""
+    result.product_image_5     = data_main.dataValues.product_image_5      != "" ? "http://" + host + "/assets/img/products/" + data_main.dataValues.product_image_5     : ""
+
+    // ข้อมูลรายละเอียดสินค้า
     var array_detail = []
     if (data_main.dataValues.product_sub1 != "") {
 
+        // เพิ่มข้อมูล sub1 ของสินค้า
         jason_sub1 = { name : data_main.dataValues.product_sub1, child : [] }
         data_sub1.forEach ((element) => jason_sub1.child.push(JSON.stringify(
             { 
@@ -208,9 +228,7 @@ exports.get_one = async (req, res) => {
             })
 
             for (y in data_detail_sub1) {
-
-                //console.log (data_detail_sub1[y].dataValues.product_detail_sub1)
-                
+            
                 array_detail.find(find_id => find_id.product_detail_sub1 === data_detail_sub1[y].dataValues.product_detail_sub1).child.push(JSON.stringify ({
                     product_detail_price    : data_detail_sub1[y].dataValues.product_detail_price,
                     product_detail_quantity : data_detail_sub1[y].dataValues.product_detail_quantity,
@@ -220,7 +238,6 @@ exports.get_one = async (req, res) => {
                 
             }
 
-            
         }
 
         result.product_detail = JSON.stringify (array_detail)
