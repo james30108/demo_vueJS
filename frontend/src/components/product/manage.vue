@@ -1,4 +1,5 @@
 <script>
+    // ทดสอบ
     import services from "../../services/setting_product";
     export default {
         name: "Product Manage",
