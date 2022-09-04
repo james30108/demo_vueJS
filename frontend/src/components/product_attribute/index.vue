@@ -111,7 +111,6 @@
 
 <template>
     <title>คุณสมบัติสินค้า</title>
-    {{ JSON.stringify(value) }}
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-3">คุณสมบัติสินค้า</h4>
         <div class="row">

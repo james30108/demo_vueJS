@@ -128,7 +128,7 @@
                             id="product_type_name"
                             class="form-control"
                             name="product_type_name"
-                            placeholder="เงินเดือนประจำตำแหน่ง"
+                            placeholder="ประเภทสินค้า"
                             v-model.trim="value.product_type_name"
                             />
                     </div>

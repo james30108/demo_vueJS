@@ -118,15 +118,15 @@ export default {
         </li>
         <li class="menu-item test">
             <router-link to="/product_type" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-support"></i>
+                <i class="menu-icon tf-icons bx bx-food-menu"></i>
                 ประเภทสินค้า
             </router-link>
             <router-link to="/product_attribute" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-support"></i>
+                <i class="menu-icon tf-icons bx bx-extension"></i>
                 คุณสมบัติสินค้า
             </router-link>
             <router-link to="/product" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-support"></i>
+                <i class="menu-icon tf-icons bx bx-shopping-bag"></i>
                 สินค้า
             </router-link>
         </li>

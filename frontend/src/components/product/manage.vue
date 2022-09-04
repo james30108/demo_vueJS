@@ -19,13 +19,13 @@
                 product_attribute: [],
                 sub1            : false,
                 sub2            : false,
-                image_cover     : "../../assets/img/avatars/1.png",
+                image_cover     : "/assets/img/products/example_product.png",
                 image           : [
-                    "../../assets/img/avatars/1.png",
-                    "../../assets/img/avatars/1.png",
-                    "../../assets/img/avatars/1.png",
-                    "../../assets/img/avatars/1.png",
-                    "../../assets/img/avatars/1.png",
+                    "/assets/img/products/example_product.png",
+                    "/assets/img/products/example_product.png",
+                    "/assets/img/products/example_product.png",
+                    "/assets/img/products/example_product.png",
+                    "/assets/img/products/example_product.png",
                 ]
             }
         },
@@ -210,7 +210,7 @@
 
 <template>
     <title>จัดการสินค้า</title>
-    {{ JSON.stringify(image_cover) }}
+    <!--{{ JSON.stringify(image_cover) }}-->
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">จัดการสินค้า</h4>
         <form id="formsubmit" @submit.prevent="form_submit">
@@ -669,7 +669,13 @@
         <div class="card mb-3">
             <div class="card-body">
                 <button type="submit" class="btn btn-primary me-2">บันทึก</button>
-                <button type="reset" class="btn btn-outline-secondary" @click="cancel">ยกเลิก</button>
+                <button 
+                  
+                    type="reset" 
+                    class="btn btn-outline-secondary" 
+                    @click="cancel"
+                    >ยกเลิก
+                </button>
             </div>
         </div>
         </form>
