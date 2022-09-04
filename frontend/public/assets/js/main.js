@@ -1,14 +1,13 @@
 /**
-* Main
-*/
-
-
+ * Main
+ */
 
 'use strict';
 
 let menu, animate;
 
-(function () {
+(function() {
+
   // Initialize menu
   //-----------------
 
@@ -27,6 +26,11 @@ let menu, animate;
   let menuToggler = document.querySelectorAll('.layout-menu-toggle');
   menuToggler.forEach(item => {
     item.addEventListener('click', event => {
+
+      
+      alert ("use !!")
+
+
       event.preventDefault();
       window.Helpers.toggleCollapsed();
     });

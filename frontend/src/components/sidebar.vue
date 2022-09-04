@@ -11,7 +11,7 @@ export default {
     },
     watch: { 
         sidebar_toggle: function(newVal, oldVal) { // watch it
-            console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+            //console.log('Prop changed: ', newVal, ' | was: ', oldVal)
             this.sidebar_status = newVal
 
             if (newVal == true) {

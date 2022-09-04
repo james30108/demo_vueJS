@@ -15470,8 +15470,8 @@ html:not(.layout-footer-fixed) .content-wrapper {
     left: 0 !important;
     margin-right: 0 !important;
     margin-left: 0 !important;
-    transform: translate3d(-100%, 0, 0);
-    will-change: transform, -webkit-transform;
+    /*transform: translate3d(-100%, 0, 0);*/
+    /*will-change: transform, -webkit-transform;*/
   }
   .layout-menu-expanded .layout-menu {
     transform: translate3d(0, 0, 0) !important;
